@@ -1,0 +1,17 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+apply from: '../build.gradle'
+
+dependencies {
+    implementation group: 'org.springframework.security', name: 'spring-security-core', version: "${springSecurityVersion}"
+    implementation group: 'org.springframework.security', name: 'spring-security-config', version: "${springSecurityVersion}"
+    implementation group: 'org.springframework.security', name: 'spring-security-web', version: "${springSecurityVersion}"
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.2.10.RELEASE'
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+}

@@ -1,0 +1,14 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+apply from: '../build.gradle'
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+    implementation group: 'org.xhtmlrenderer', name: 'flying-saucer-pdf-openpdf', version: '9.1.22'
+    implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.31'
+    implementation group: 'com.google.zxing', name: 'core', version: '3.4.1'
+    implementation group: 'com.google.zxing', name: 'javase', version: '3.4.1'
+    implementation("mysql:mysql-connector-java:8.0.32")
+}
