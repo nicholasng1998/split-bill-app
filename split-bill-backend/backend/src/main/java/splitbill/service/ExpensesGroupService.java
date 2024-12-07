@@ -8,9 +8,11 @@ public interface ExpensesGroupService {
 
     void createGroup(ExpensesGroupModel expensesGroupModel);
 
-    void addUserToGroup();
 
-    void updateGroupStatus();
+    void updateGroupStatusToStarted(int groupId);
+
+
+    void updateGroupStatusToClosed(int groupId);
 
     List<ExpensesGroupModel> readGroups(String username);
 

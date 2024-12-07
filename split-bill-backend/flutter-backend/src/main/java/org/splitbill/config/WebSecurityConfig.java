@@ -1,6 +1,7 @@
 package org.splitbill.config;
 
 import lombok.RequiredArgsConstructor;
+import org.splitbill.feign.UserFeignService;
 import org.splitbill.interceptor.JwtFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomAuthenticationProvider customAuthenticationProvider;
     private final CustomLoginSuccessHandler customLoginSuccessHandler;
+    private final UserFeignService userFeignService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -52,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(this.jwtSecretKey);
+        return new JwtFilter(this.jwtSecretKey, this.userFeignService);
     }
 
 

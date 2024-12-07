@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/group-expenses")
+@RequestMapping("/v1/expenses-group")
 @RequiredArgsConstructor
 public class ExpensesGroupRestController {
 }

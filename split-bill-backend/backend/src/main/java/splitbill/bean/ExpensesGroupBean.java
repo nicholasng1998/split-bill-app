@@ -38,4 +38,21 @@ public class ExpensesGroupBean extends Auditable {
 
     @Column(name = "DUE_DATE")
     private Date dueDate;
+
+    public enum STATUS {
+
+        WAITING("waiting"),
+        STARTED("started"),
+        CLOSED("closed");
+
+        private final String value;
+
+        STATUS(final String value) {
+            this.value = value;
+        }
+
+        public String toValue() {
+            return this.value;
+        }
+    }
 }
