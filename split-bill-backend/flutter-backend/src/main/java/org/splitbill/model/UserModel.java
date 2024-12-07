@@ -1,4 +1,4 @@
-package splitbill.model;
+package org.splitbill.model;
 
 import lombok.Data;
 
