@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: residential-area-backend
+    name: split-bill-backend
   datasource:
     url: jdbc:mysql://localhost:3306/splitbillapp
     username: root
