@@ -8,7 +8,6 @@ import splitbill.bean.UserBean;
 import splitbill.bean.UserExpensesGroupBean;
 import splitbill.dao.UserExpensesGroupRepository;
 import splitbill.dao.UserRepository;
-import splitbill.util.AuthUtil;
 
 import java.util.Date;
 
@@ -22,9 +21,9 @@ public class UserExpensesGroupServiceImpl implements UserExpensesGroupService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addUserToGroup(int userId, int groupId) {
+    public void addUserToGroup(String username, int groupId) {
 
-        UserBean userBean = userRepository.findById(userId).orElse(null);
+        UserBean userBean = userRepository.findByUsername(username).orElse(null);
         if (userBean == null) {
             throw new InternalError("user.not.found");
         }

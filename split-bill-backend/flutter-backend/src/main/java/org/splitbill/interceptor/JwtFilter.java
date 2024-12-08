@@ -17,8 +17,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 @Slf4j
 public class JwtFilter extends GenericFilterBean {
@@ -27,14 +26,30 @@ public class JwtFilter extends GenericFilterBean {
     private final String secretKey;
     private final UserFeignService userFeignService;
 
+    static final Set<String> whitelistedApi = new HashSet<>();
+
+    static {
+        whitelistedApi.add("login");
+        whitelistedApi.add("logout");
+        whitelistedApi.add("user/create");
+    }
+
     public JwtFilter(String secretKey, UserFeignService userFeignService) {
         this.secretKey = secretKey;
         this.userFeignService = userFeignService;
     }
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        log.info("doFilter first");
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+
+        String requestUrl = getRequestUrl(httpServletRequest);
+        log.info("requestUrl: {}", requestUrl);
+
+        boolean matchWhitelistApi = whitelistedApi.stream().anyMatch(requestUrl::contains);
+        if (matchWhitelistApi) {
+            chain.doFilter(servletRequest, servletResponse);
+            return;
+        }
 
         String authToken = httpServletRequest.getHeader(AUTH_TOKEN);
 
@@ -55,8 +70,6 @@ public class JwtFilter extends GenericFilterBean {
         usernamePasswordAuthenticationToken.setDetails(username);
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-        String requestUrl = getRequestUrl(httpServletRequest);
-        log.info("requestUrl: {}", requestUrl);
         chain.doFilter(servletRequest, servletResponse);
     }
 

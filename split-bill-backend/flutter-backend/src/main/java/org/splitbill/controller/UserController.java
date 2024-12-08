@@ -20,7 +20,6 @@ public class UserController {
 
     @PostMapping(value = "/create")
     public ResponseEntity<CommonResponseModel> createUser(@RequestBody UserModel userModel) {
-        AuthUtil.getUsername();
         return new ResponseEntity<>(userFeignService.createUser(userModel), HttpStatus.OK);
     }
 

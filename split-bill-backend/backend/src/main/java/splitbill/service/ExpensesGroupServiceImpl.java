@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import splitbill.bean.ExpensesGroupBean;
 import splitbill.bean.UserBean;
+import splitbill.bean.UserExpensesGroupBean;
 import splitbill.dao.ExpensesGroupRepository;
 import splitbill.dao.UserExpensesGroupRepository;
 import splitbill.dao.UserRepository;
@@ -22,13 +23,15 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
 
     private final ExpensesGroupRepository expensesGroupRepository;
     private final UserRepository userRepository;
-    private final UserExpensesGroupRepository userExpensesGroupRepository;
+    private final UserExpensesGroupService userExpensesGroupService;
+
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createGroup(ExpensesGroupModel expensesGroupModel) {
         String username = AuthUtil.getUsername();
-
+        log.info("username: {}", username);
         UserBean userBean = userRepository.findByUsername(username).orElse(null);
         if (userBean == null) {
             throw new InternalError("user.not.found");
@@ -36,6 +39,8 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
 
         ExpensesGroupBean expensesGroupBean = this.initExpensesGroupBean(userBean.getUserId(), expensesGroupModel);
         expensesGroupRepository.save(expensesGroupBean);
+
+        userExpensesGroupService.addUserToGroup(userBean.getUsername(), expensesGroupBean.getGroupId());
     }
 
     private ExpensesGroupBean initExpensesGroupBean(int userId, ExpensesGroupModel expensesGroupModel) {
