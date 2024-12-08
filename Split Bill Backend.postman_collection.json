@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "ce052b32-0397-4b9f-af4e-3c3d8608ce9a",
+		"name": "Split Bill Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IHVzZXJuYW1lIiwiaWF0IjoxNzMzNTg2OTg1LCJleHAiOjE3MzM2NzMzODV9.tfwuQ03a85NyYmpI3ZMIDXZZiu0nMV8lkJX7vVsBfW0OxsZkTCdhOK26Xy3NzHV7P0F_dysh6ayYZd3f6dmQAw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"identityNo\": \"980408065171\",\r\n    \"mobileNo\": \"0189022215\",\r\n    \"username\": \"nicholasng98\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/user/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/login?username=nicholasng98&password=password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "nicholasng98"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Expenses Group",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuaWNob2xhc25nOTgiLCJpYXQiOjE3MzM2NDY5ODcsImV4cCI6MTczMzczMzM4N30.JaueCJ7aYF-CZ-ombDeOX_wy5ux0ZvT3RC3_o44kazQOFI4PrWJkJPh6Tf8kExAu1FZoUoV_2PbAXKFW2hG0bw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"groupName\": \"Melaka Trip\",\r\n    \"totalExpenses\": \"500\",\r\n    \"dueDate\": \"2024-12-08\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/expenses-group/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"expenses-group",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

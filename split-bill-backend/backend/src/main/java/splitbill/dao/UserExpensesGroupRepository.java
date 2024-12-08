@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserExpensesGroupRepository extends JpaRepository<UserExpensesGroupBean, Integer> {
 
     // Custom query to find all records by userId
-    List<UserExpensesGroupBean> findByUserId(String userId);
+    List<UserExpensesGroupBean> findByUserId(int userId);
 
     // Custom query to find all records by groupId
     List<UserExpensesGroupBean> findByGroupId(String groupId);

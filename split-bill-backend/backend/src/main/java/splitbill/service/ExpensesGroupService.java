@@ -14,6 +14,4 @@ public interface ExpensesGroupService {
 
     void updateGroupStatusToClosed(int groupId);
 
-    List<ExpensesGroupModel> readGroups(String username);
-
 }

@@ -1,11 +1,14 @@
 package splitbill.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -38,6 +41,11 @@ public class ExpensesGroupBean extends Auditable {
 
     @Column(name = "DUE_DATE")
     private Date dueDate;
+
+    @OneToMany(mappedBy = "expensesGroupBean", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("userExpensesGroupBeans")
+    @ToString.Exclude
+    private List<UserExpensesGroupBean> userExpensesGroupBeans;
 
     public enum STATUS {
 
