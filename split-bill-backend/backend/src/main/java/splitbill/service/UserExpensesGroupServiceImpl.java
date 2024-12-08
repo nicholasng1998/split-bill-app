@@ -53,7 +53,7 @@ public class UserExpensesGroupServiceImpl implements UserExpensesGroupService {
         log.info("userExpensesGroupBeans: {}", userExpensesGroupBeans);
 
         List<ExpensesGroupModel> expensesGroupModels = new ArrayList<>();
-        if (CollectionUtils.isEmpty(expensesGroupModels)) {
+        if (CollectionUtils.isEmpty(userExpensesGroupBeans)) {
             return expensesGroupModels;
         }
 
