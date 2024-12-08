@@ -24,4 +24,9 @@ public class UserExpensesGroupController {
     public ResponseEntity<List<ExpensesGroupModel>> readUserExpensesGroup() {
         return new ResponseEntity<>(userExpensesGroupFeignService.readUserExpensesGroupModel(), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/add-user")
+    public ResponseEntity<CommonResponseModel> addUser(@RequestParam String username, @RequestParam int groupId) {
+        return new ResponseEntity<>(userExpensesGroupFeignService.addUser(username, groupId), HttpStatus.OK);
+    }
 }

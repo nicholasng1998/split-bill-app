@@ -33,4 +33,16 @@ public class UserExpensesGroupRestController {
             return new ResponseEntity<>(responseModel, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping(value = "/add-user")
+    public ResponseEntity<CommonResponseModel> addUser(@RequestParam String username, @RequestParam int groupId) {
+        List<ExpensesGroupModel> responseModel = new ArrayList<>();
+        try {
+            userExpensesGroupService.addUserToGroup(username, groupId);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
+    }
 }
