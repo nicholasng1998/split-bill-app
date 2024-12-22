@@ -34,7 +34,7 @@ class AddFriendsScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-          padding: const EdgeInsets.only(top: 23.0),
+          padding: const EdgeInsets.only(top: 120.0),
           child: Center(
             child: Column(children: <Widget>[
               Stack(
@@ -48,7 +48,7 @@ class AddFriendsScreen extends StatelessWidget {
                     ),
                     child: Container(
                         width: 300.0,
-                        height: 360.0,
+                        height: 190.0,
                         child: SingleChildScrollView(
                           child: Column(
                             children: <Widget>[
@@ -119,7 +119,7 @@ class AddFriendsScreen extends StatelessWidget {
                         )),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 340.0),
+                    margin: const EdgeInsets.only(top: 170.0),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       boxShadow: <BoxShadow>[

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/widgets/sign_up.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_application/theme.dart';
 import 'package:flutter_application/widgets/snackbar.dart';
-import 'package:flutter_application/services/authentication_service.dart';
 import 'package:flutter_application/pages/widgets/dashboard_page.dart';
 import 'package:flutter_application/utils/user_state.dart';
 import 'package:provider/provider.dart';
