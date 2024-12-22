@@ -48,7 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           child: AppBar(
             title: Text(
-              'Welcome back! $username',
+              'Welcome back!',
               style: TextStyle(color: Colors.white),
             ),
             backgroundColor: Colors.transparent,
