@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/widgets/add-friends.dart';
 
 import '../../theme.dart';
+import '../../widgets/label-value-widget.dart';
 
 class AccountScreen extends StatelessWidget {
   @override
@@ -31,18 +32,24 @@ class AccountScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(children: <Widget>[
                       Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 15.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Abu owes you RM100",
-                              style: const TextStyle(
-                                  fontFamily: "WorkSansSemiBold",
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                            ),
-                          )),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LabelValueWidget(
+                                label: 'Email:', value: 'test@gmail.com'),
+                            LabelValueWidget(
+                                label: 'Password:',
+                                value: 'password123',
+                                isPassword: true),
+                            LabelValueWidget(
+                                label: 'Phone Number:', value: 'xxx-xxxxxxx'),
+                            LabelValueWidget(
+                                label: 'NRIC No.:', value: '000000-00-0000'),
+                          ],
+                        ),
+                      )
                     ]),
                   ),
                 )),
@@ -79,7 +86,7 @@ class AccountScreen extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
                 child: Text(
-                  'Add Friends',
+                  'SAVE',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.0,

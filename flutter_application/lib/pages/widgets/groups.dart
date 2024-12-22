@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/widgets/add-friends.dart';
+import 'package:flutter_application/pages/widgets/add-group.dart';
 
 import '../../theme.dart';
 
@@ -89,7 +89,7 @@ class GroupsScreen extends StatelessWidget {
               onPressed: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddFriendsScreen()),
+                  MaterialPageRoute(builder: (context) => AddGroupScreen()),
                 )
               },
             ),
