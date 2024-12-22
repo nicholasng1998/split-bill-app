@@ -17,34 +17,36 @@ class FriendsScreen extends StatelessWidget {
                 fontSize: 25.0,
                 color: Colors.black),
           ),
-          Container(
-              margin: const EdgeInsets.only(top: 20.0),
-              width: 300.0,
-              height: 400.0,
-              child: Card(
-                elevation: 2.0,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 15.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Abu owes you RM100",
-                            style: const TextStyle(
-                                fontFamily: "WorkSansSemiBold",
-                                fontSize: 16.0,
-                                color: Colors.black),
-                          ),
-                        )),
-                  ]),
-                ),
-              )),
+          Flexible(
+            child: Container(
+                margin: const EdgeInsets.only(top: 20.0),
+                width: 300.0,
+                height: 350.0,
+                child: Card(
+                  elevation: 2.0,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 15.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Abu owes you RM100",
+                              style: const TextStyle(
+                                  fontFamily: "WorkSansSemiBold",
+                                  fontSize: 16.0,
+                                  color: Colors.black),
+                            ),
+                          )),
+                    ]),
+                  ),
+                )),
+          ),
           Container(
             margin: const EdgeInsets.only(top: 40.0),
             decoration: const BoxDecoration(
