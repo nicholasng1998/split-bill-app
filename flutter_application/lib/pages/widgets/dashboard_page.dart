@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/login_page.dart';
-import 'package:flutter_application/pages/widgets/add_visitor_page.dart';
-import 'package:flutter_application/pages/widgets/emergency_page.dart';
-import 'package:flutter_application/pages/widgets/notice_page.dart';
-import 'package:flutter_application/pages/widgets/payment_page.dart';
+import 'package:flutter_application/pages/widgets/account.dart';
+import 'package:flutter_application/pages/widgets/activity.dart';
+import 'package:flutter_application/pages/widgets/groups.dart';
 import 'package:flutter_application/theme.dart';
 import 'package:flutter_application/utils/user_state.dart';
 import 'package:provider/provider.dart';
 
 import 'friends.dart';
 
-enum NavBarItem { Friends, Payment, AddVisitor, Hello, Emergency }
+enum NavBarItem { Friends, Groups, AddVisitor, Activity, Emergency }
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -48,7 +47,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           child: AppBar(
             title: Text(
-              'Welcome back!',
+              'Welcome Back!',
               style: TextStyle(color: Colors.white),
             ),
             backgroundColor: Colors.transparent,
@@ -67,12 +66,10 @@ class _DashboardPageState extends State<DashboardPage> {
         index: _currentNavBarItem.index,
         children: <Widget>[
           FriendsScreen(),
-          NoticeScreen(),
-          PaymentScreen(username: '$username'),
-          AddVisitorScreen(username: '$username'),
-          EmergencyScreen(
-            username: '$username',
-          )
+          GroupsScreen(),
+          ActivityScreen(),
+          ActivityScreen(),
+          AccountScreen()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
