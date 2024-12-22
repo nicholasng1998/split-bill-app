@@ -9,4 +9,7 @@ public interface ExpensesDetailsService {
     void addItemization(ExpensesDetailsModel expensesDetailsModel);
 
     List<ExpensesDetailsModel> readItemization();
+
+    void updateItemization(int itemizationId, ExpensesDetailsModel expensesDetailsModel);
+
 }
