@@ -3,8 +3,8 @@ import 'package:flutter_application/pages/login_page.dart';
 import 'package:flutter_application/pages/widgets/account.dart';
 import 'package:flutter_application/pages/widgets/activity.dart';
 import 'package:flutter_application/pages/widgets/groups.dart';
+import 'package:flutter_application/provider/auth_token_provider.dart';
 import 'package:flutter_application/theme.dart';
-import 'package:flutter_application/utils/user_state.dart';
 import 'package:provider/provider.dart';
 
 import 'friends.dart';
@@ -20,7 +20,7 @@ class _DashboardPageState extends State<DashboardPage> {
   NavBarItem _currentNavBarItem = NavBarItem.Friends;
 
   void _logout(BuildContext context) {
-    Provider.of<UserState>(context, listen: false).logout();
+    // Provider.of<AuthTokenProvider>(context, listen: false).logout();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => LoginPage()),
@@ -29,7 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    String? username = Provider.of<UserState>(context).username;
+    String? username = Provider.of<AuthTokenProvider>(context).authToken;
 
     return Scaffold(
       appBar: PreferredSize(

@@ -1,6 +1,11 @@
 // Define Apis Here
-const String baseUrl = 'http://192.168.56.1:8082/api';
+const String baseUrl = 'http://192.168.109.1:8082/api';
 const String LOGIN_API = baseUrl + '/login';
+
+// user
+const String USER_REQUEST_BASE = '/api/user';
+const String USER_CREATE = USER_REQUEST_BASE + '/create';
+
 
 //emergency-request
 const String EMERGENCY_REQUEST_BASE = '/protected/emergency-request';

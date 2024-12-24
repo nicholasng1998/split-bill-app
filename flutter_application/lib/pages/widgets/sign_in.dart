@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/provider/auth_token_provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_application/theme.dart';
 import 'package:flutter_application/widgets/snackbar.dart';
 import 'package:flutter_application/pages/widgets/dashboard_page.dart';
-import 'package:flutter_application/utils/user_state.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application/services/authentication_service.dart';
 
 // Text Display
 const String USERNAME = "Email";
@@ -37,28 +38,16 @@ class _SignInState extends State<SignIn> {
     String username = loginEmailController.text.trim();
     String password = loginPasswordController.text.trim();
 
-    // bool loggedIn = await login(username, password);
-    bool loggedIn = true;
+    String authToken = await login(username, password);
 
-    if (loggedIn) {
-      Provider.of<UserState>(context, listen: false).setUsername(username);
+    if (authToken.isNotEmpty) {
+      Provider.of<AuthTokenProvider>(context, listen: false).login(username);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => DashboardPage()),
       );
     } else {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('Login Failed'),
-                content: Text('Invalid username or password.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('OK'),
-                  ),
-                ],
-              ));
+      showLoginErrorDialog(context);
     }
   }
 
@@ -238,4 +227,65 @@ class _SignInState extends State<SignIn> {
       _obscureTextPassword = !_obscureTextPassword;
     });
   }
+}
+
+void showLoginErrorDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) => Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      backgroundColor: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Icon for error message
+            Icon(
+              Icons.error_outline,
+              color: Colors.redAccent,
+              size: 50.0,
+            ),
+            SizedBox(height: 16.0),
+            // Title of the dialog
+            Text(
+              'Login Failed',
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8.0),
+            // Error message text
+            Text(
+              'Invalid username or password.',
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 16.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 24.0),
+            // Button to close the dialog
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.redAccent, // Button color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'OK',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

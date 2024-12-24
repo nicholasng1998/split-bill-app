@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application/pages/login_page.dart';
-import 'package:flutter_application/utils/user_state.dart';
+import 'package:flutter_application/provider/auth_token_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -11,21 +11,21 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => AuthTokenProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserState(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Split Bill Application',
-        home: LoginPage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Split Bill Application',
+      home: LoginPage(),
     );
   }
-  
 }

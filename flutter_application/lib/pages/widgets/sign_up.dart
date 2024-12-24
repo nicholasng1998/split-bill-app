@@ -15,26 +15,29 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final FocusNode focusNodeEmail = FocusNode();
   final FocusNode focusNodePassword = FocusNode();
   final FocusNode focusNodeConfirmPassword = FocusNode();
-  final FocusNode focusNodeEmail = FocusNode();
-  final FocusNode focusNodeName = FocusNode();
+  final FocusNode focusNodeNricNo = FocusNode();
+  final FocusNode focusNodePhoneNo = FocusNode();
 
   bool _obscureTextPassword = true;
   bool _obscureTextConfirmPassword = true;
 
   TextEditingController signupEmailController = TextEditingController();
-  TextEditingController signupNameController = TextEditingController();
   TextEditingController signupPasswordController = TextEditingController();
   TextEditingController signupConfirmPasswordController =
       TextEditingController();
+  TextEditingController signupPhoneNoController = TextEditingController();
+  TextEditingController signupNricNoController = TextEditingController();
 
   @override
   void dispose() {
+    focusNodeEmail.dispose();
     focusNodePassword.dispose();
     focusNodeConfirmPassword.dispose();
-    focusNodeEmail.dispose();
-    focusNodeName.dispose();
+    focusNodeNricNo.dispose();
+    focusNodePhoneNo.dispose();
     super.dispose();
   }
 
@@ -66,9 +69,9 @@ class _SignUpState extends State<SignUp> {
                                 left: 25.0,
                                 right: 25.0),
                             child: TextField(
-                              focusNode: focusNodeName,
-                              controller: signupNameController,
-                              keyboardType: TextInputType.text,
+                              focusNode: focusNodeEmail,
+                              controller: signupEmailController,
+                              keyboardType: TextInputType.emailAddress,
                               textCapitalization: TextCapitalization.words,
                               autocorrect: false,
                               style: const TextStyle(
@@ -103,25 +106,34 @@ class _SignUpState extends State<SignUp> {
                                 left: 25.0,
                                 right: 25.0),
                             child: TextField(
-                              focusNode: focusNodeEmail,
-                              controller: signupEmailController,
-                              keyboardType: TextInputType.emailAddress,
+                              focusNode: focusNodePassword,
+                              controller: signupPasswordController,
+                              obscureText: _obscureTextPassword,
                               autocorrect: false,
                               style: const TextStyle(
                                   fontFamily: 'WorkSansSemiBold',
                                   fontSize: 16.0,
                                   color: Colors.black),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                icon: Icon(
-                                  FontAwesomeIcons.lock,
-                                  color: Colors.black,
-                                ),
-                                hintText: PASSWORD,
-                                hintStyle: TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
-                              ),
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  icon: Icon(
+                                    FontAwesomeIcons.lock,
+                                    color: Colors.black,
+                                  ),
+                                  hintText: PASSWORD,
+                                  hintStyle: TextStyle(
+                                      fontFamily: 'WorkSansSemiBold',
+                                      fontSize: 16.0),
+                                  suffixIcon: GestureDetector(
+                                    onTap: _toggleSignup,
+                                    child: Icon(
+                                      _obscureTextPassword
+                                          ? FontAwesomeIcons.eye
+                                          : FontAwesomeIcons.eyeSlash,
+                                      size: 15.0,
+                                      color: Colors.black,
+                                    ),
+                                  )),
                               onSubmitted: (_) {
                                 focusNodePassword.requestFocus();
                               },
@@ -139,9 +151,9 @@ class _SignUpState extends State<SignUp> {
                                 left: 25.0,
                                 right: 25.0),
                             child: TextField(
-                              focusNode: focusNodePassword,
-                              controller: signupPasswordController,
-                              obscureText: _obscureTextPassword,
+                              focusNode: focusNodeConfirmPassword,
+                              controller: signupConfirmPasswordController,
+                              obscureText: _obscureTextConfirmPassword,
                               autocorrect: false,
                               style: const TextStyle(
                                   fontFamily: 'WorkSansSemiBold',
@@ -158,9 +170,9 @@ class _SignUpState extends State<SignUp> {
                                     fontFamily: 'WorkSansSemiBold',
                                     fontSize: 16.0),
                                 suffixIcon: GestureDetector(
-                                  onTap: _toggleSignup,
+                                  onTap: _toggleSignupConfirm,
                                   child: Icon(
-                                    _obscureTextPassword
+                                    _obscureTextConfirmPassword
                                         ? FontAwesomeIcons.eye
                                         : FontAwesomeIcons.eyeSlash,
                                     size: 15.0,
@@ -185,9 +197,9 @@ class _SignUpState extends State<SignUp> {
                                 left: 25.0,
                                 right: 25.0),
                             child: TextField(
-                              focusNode: focusNodeEmail,
-                              controller: signupEmailController,
-                              keyboardType: TextInputType.emailAddress,
+                              focusNode: focusNodeNricNo,
+                              controller: signupNricNoController,
+                              keyboardType: TextInputType.text,
                               autocorrect: false,
                               style: const TextStyle(
                                   fontFamily: 'WorkSansSemiBold',
@@ -221,9 +233,9 @@ class _SignUpState extends State<SignUp> {
                                 left: 25.0,
                                 right: 25.0),
                             child: TextField(
-                              focusNode: focusNodeConfirmPassword,
-                              controller: signupConfirmPasswordController,
-                              obscureText: _obscureTextConfirmPassword,
+                              focusNode: focusNodePhoneNo,
+                              controller: signupPhoneNoController,
+                              keyboardType: TextInputType.number,
                               autocorrect: false,
                               style: const TextStyle(
                                   fontFamily: 'WorkSansSemiBold',
@@ -241,7 +253,7 @@ class _SignUpState extends State<SignUp> {
                                     fontSize: 16.0),
                               ),
                               onSubmitted: (_) {
-                                _toggleSignUpButton();
+                                focusNodePhoneNo.requestFocus();
                               },
                               textInputAction: TextInputAction.go,
                             ),

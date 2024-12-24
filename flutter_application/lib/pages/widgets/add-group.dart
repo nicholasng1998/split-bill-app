@@ -3,9 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../theme.dart';
 
-const String EMAIL = "Email";
-const String PHONE_NO = "Phone Number";
-
 class AddGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,7 +31,7 @@ class AddGroupScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-          padding: const EdgeInsets.only(top: 23.0),
+          padding: const EdgeInsets.only(top: 120.0),
           child: Center(
             child: Column(children: <Widget>[
               Stack(
@@ -48,7 +45,7 @@ class AddGroupScreen extends StatelessWidget {
                     ),
                     child: Container(
                         width: 300.0,
-                        height: 360.0,
+                        height: 300.0,
                         child: SingleChildScrollView(
                           child: Column(
                             children: <Widget>[
@@ -69,10 +66,10 @@ class AddGroupScreen extends StatelessWidget {
                                   decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     icon: Icon(
-                                      FontAwesomeIcons.envelope,
+                                      FontAwesomeIcons.snowflake,
                                       color: Colors.black,
                                     ),
-                                    hintText: EMAIL,
+                                    hintText: "Group Name",
                                     hintStyle: TextStyle(
                                         fontFamily: 'WorkSansSemiBold',
                                         fontSize: 16.0),
@@ -100,10 +97,44 @@ class AddGroupScreen extends StatelessWidget {
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     icon: const Icon(
-                                      FontAwesomeIcons.phone,
+                                      FontAwesomeIcons.dollarSign,
                                       color: Colors.black,
                                     ),
-                                    hintText: PHONE_NO,
+                                    hintText: "Spent Amount",
+                                    hintStyle: const TextStyle(
+                                        fontFamily: 'WorkSansSemiBold',
+                                        fontSize: 16.0),
+                                  ),
+                                  onSubmitted: (_) {
+                                    ;
+                                  },
+                                  textInputAction: TextInputAction.go,
+                                ),
+                              ),
+                              Container(
+                                width: 250.0,
+                                height: 1.0,
+                                color: Colors.grey[400],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20.0,
+                                    bottom: 20.0,
+                                    left: 25.0,
+                                    right: 25.0),
+                                child: TextField(
+                                  autocorrect: false,
+                                  style: const TextStyle(
+                                      fontFamily: 'WorkSansSemiBold',
+                                      fontSize: 16.0,
+                                      color: Colors.black),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    icon: const Icon(
+                                      FontAwesomeIcons.calendar,
+                                      color: Colors.black,
+                                    ),
+                                    hintText: "Due Date",
                                     hintStyle: const TextStyle(
                                         fontFamily: 'WorkSansSemiBold',
                                         fontSize: 16.0),
@@ -119,7 +150,7 @@ class AddGroupScreen extends StatelessWidget {
                         )),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 340.0),
+                    margin: const EdgeInsets.only(top: 280.0),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       boxShadow: <BoxShadow>[
@@ -147,12 +178,11 @@ class AddGroupScreen extends StatelessWidget {
                     child: MaterialButton(
                       highlightColor: Colors.transparent,
                       splashColor: CustomTheme.loginGradientEnd,
-                      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 42.0),
                         child: Text(
-                          'SAVE',
+                          'SUBMIT',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 25.0,
