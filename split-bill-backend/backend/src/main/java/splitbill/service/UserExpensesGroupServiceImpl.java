@@ -11,10 +11,12 @@ import splitbill.bean.UserExpensesGroupBean;
 import splitbill.dao.UserExpensesGroupRepository;
 import splitbill.dao.UserRepository;
 import splitbill.model.ExpensesGroupModel;
+import splitbill.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -66,5 +68,42 @@ public class UserExpensesGroupServiceImpl implements UserExpensesGroupService {
         }
 
         return expensesGroupModels;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserModel> readAllUsersFromGroup(int groupId) {
+        List<UserExpensesGroupBean> userExpensesGroupBeans = userExpensesGroupRepository.findByGroupId(groupId);
+        log.info("userExpensesGroupBeans: {}", userExpensesGroupBeans);
+
+        if (CollectionUtils.isEmpty(userExpensesGroupBeans)) {
+            return null;
+        }
+
+        List<Integer> userIds = userExpensesGroupBeans.stream()
+                .map(UserExpensesGroupBean::getUserId)
+                .collect(Collectors.toList());
+        log.info("userIds: {}", userIds);
+
+        if (CollectionUtils.isEmpty(userIds)) {
+            return null;
+        }
+
+        List<UserBean> userBeans = userRepository.findByUserIdIn(userIds);
+        log.info("userBeans: {}", userBeans);
+
+        if (CollectionUtils.isEmpty(userBeans)) {
+            return null;
+        }
+
+        List<UserModel> userModels = new ArrayList<>();
+        userBeans.forEach(bean -> {
+            UserModel userModel = new UserModel();
+            BeanUtils.copyProperties(bean, userModel);
+            userModels.add(userModel);
+        });
+
+        log.info("userModels: {}", userModels);
+        return userModels;
     }
 }

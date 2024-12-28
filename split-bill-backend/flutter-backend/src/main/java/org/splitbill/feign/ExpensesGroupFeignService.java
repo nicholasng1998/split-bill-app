@@ -2,7 +2,9 @@ package org.splitbill.feign;
 
 import org.splitbill.model.CommonResponseModel;
 import org.splitbill.model.ExpensesGroupModel;
+import org.splitbill.model.GroupDetailsModel;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,4 +20,7 @@ public interface ExpensesGroupFeignService {
 
     @PostMapping(value = "/update-to-closed")
     CommonResponseModel updateGroupStatusToClosed(@RequestParam int groupId);
+
+    @GetMapping(value = "/get-group-details")
+    GroupDetailsModel getGroupDetails(@RequestParam int groupId);
 }

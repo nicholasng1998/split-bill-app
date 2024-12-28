@@ -28,6 +28,7 @@ public class ExpensesDetailsServiceImpl implements ExpensesDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ExpensesDetailsModel> readItemization() {
         return null;
     }

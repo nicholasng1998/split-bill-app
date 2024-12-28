@@ -1,6 +1,7 @@
 package splitbill.service;
 
 import splitbill.model.ExpensesGroupModel;
+import splitbill.model.GroupDetailsModel;
 
 public interface ExpensesGroupService {
 
@@ -11,5 +12,7 @@ public interface ExpensesGroupService {
 
 
     void updateGroupStatusToClosed(int groupId);
+
+    GroupDetailsModel readGroupDetails(int groupId);
 
 }

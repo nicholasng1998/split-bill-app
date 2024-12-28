@@ -10,7 +10,6 @@ class MyNavigatorObserver extends NavigatorObserver {
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (previousRoute?.settings.name == '/dashboard') {
-      print("came back dashboard");
       onPop();
     }
     super.didPop(route, previousRoute);

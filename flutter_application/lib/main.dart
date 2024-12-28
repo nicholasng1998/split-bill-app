@@ -6,6 +6,7 @@ import 'package:flutter_application/pages/widgets/activity.dart';
 import 'package:flutter_application/pages/widgets/add-friends.dart';
 import 'package:flutter_application/pages/widgets/dashboard_page.dart';
 import 'package:flutter_application/pages/widgets/friends.dart';
+import 'package:flutter_application/pages/widgets/group-details.dart';
 import 'package:flutter_application/pages/widgets/groups.dart';
 import 'package:flutter_application/provider/auth_token_provider.dart';
 import 'package:flutter_application/utils/my_navigator_observer.dart';
@@ -34,17 +35,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorObservers: [
-        MyNavigatorObserver(
-            friendsScreenKey: friendsScreenKey,
-            onPop: () {
-              print("asd");
-            })
+        MyNavigatorObserver(friendsScreenKey: friendsScreenKey, onPop: () {})
       ],
       routes: {
         '/dashboard': (context) => DashboardPage(),
         '/friendsScreen': (context) =>
             FriendsScreen(friendsScreenKey: friendsScreenKey),
         '/addFriendsScreen': (context) => AddFriendsScreen(),
+        '/groupDetailsScreen': (context) => GroupDetailsScreen(),
       },
       debugShowCheckedModeBanner: false,
       title: 'Split Bill Application',

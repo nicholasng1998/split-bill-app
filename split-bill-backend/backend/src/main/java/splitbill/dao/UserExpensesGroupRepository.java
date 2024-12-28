@@ -14,7 +14,7 @@ public interface UserExpensesGroupRepository extends JpaRepository<UserExpensesG
     List<UserExpensesGroupBean> findByUserId(int userId);
 
     // Custom query to find all records by groupId
-    List<UserExpensesGroupBean> findByGroupId(String groupId);
+    List<UserExpensesGroupBean> findByGroupId(int groupId);
 
     // Custom query to find a record by userId and groupId
     Optional<UserExpensesGroupBean> findByUserIdAndGroupId(String userId, String groupId);

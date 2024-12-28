@@ -11,29 +11,16 @@ const String FRIENDS_REQUEST_BASE = baseUrl + '/friends';
 const String FRIENDS_CREATE = FRIENDS_REQUEST_BASE + '/add';
 const String FRIENDS_READ = FRIENDS_REQUEST_BASE + '/get';
 
-//emergency-request
-const String EMERGENCY_REQUEST_BASE = '/protected/emergency-request';
-const String EMERGENCY_REQUEST_CREATE_API =
-    baseUrl + EMERGENCY_REQUEST_BASE + '/create';
-const String EMERGENCY_REQUEST_READ_API =
-    baseUrl + EMERGENCY_REQUEST_BASE + '/read-by-username';
+// expenses-group
+const String EXPENSES_GROUP_REQUEST_BASE = baseUrl + '/expenses-group';
+const String EXPENSES_GROUP_CREATE = EXPENSES_GROUP_REQUEST_BASE + '/create';
+const String EXPENSES_GROUP_UPDATE_TO_STARTED =
+    EXPENSES_GROUP_REQUEST_BASE + '/update-to-started';
+const String EXPENSES_GROUP_UPDATE_TO_CLOSED =
+    EXPENSES_GROUP_REQUEST_BASE + '/update-to-closed';
 
-//visitor-pass
-const String VISITOR_PASS_REQUEST_BASE = '/protected/visitor-pass';
-const String VISITOR_PASS_CREATE_API =
-    baseUrl + VISITOR_PASS_REQUEST_BASE + '/create';
-const String VISITOR_PASS_READ_API =
-    baseUrl + VISITOR_PASS_REQUEST_BASE + '/read-by-username';
+// user-expenses-group
+const String USER_EXPENSES_GROUP_REQUEST_BASE = baseUrl + '/user-expenses-group';
+const String USER_EXPENSES_GROUP_READ = USER_EXPENSES_GROUP_REQUEST_BASE + '/read';
+const String USER_EXPENSES_GROUP_ADD_USER = USER_EXPENSES_GROUP_REQUEST_BASE + '/add-user';
 
-//announcement
-const String NOTICE_REQUEST_BASE = '/protected/notice';
-const String NOTICE_READ_API = baseUrl + NOTICE_REQUEST_BASE + '/read';
-
-//statement
-const String STATEMENT_REQUEST_BASE = '/protected/statement';
-const String STATEMENT_READ_API =
-    baseUrl + STATEMENT_REQUEST_BASE + '/read-by-username';
-
-//payment
-const String PAYMENT_REQUEST_BASE = '/protected/payment';
-const String PAYMENT_CREATE_API = baseUrl + PAYMENT_REQUEST_BASE + '/create';

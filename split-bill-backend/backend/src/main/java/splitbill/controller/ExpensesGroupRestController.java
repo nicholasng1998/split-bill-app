@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import splitbill.model.CommonResponseModel;
 import splitbill.model.ExpensesGroupModel;
+import splitbill.model.GroupDetailsModel;
 import splitbill.service.ExpensesGroupService;
 
 @Slf4j
@@ -50,6 +51,16 @@ public class ExpensesGroupRestController {
         return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
     }
 
-
+    @GetMapping(value = "/get-group-details")
+    public ResponseEntity<GroupDetailsModel> getGroupDetails(@RequestParam int groupId) {
+        GroupDetailsModel groupDetailsModel = new GroupDetailsModel();
+        try {
+            groupDetailsModel = expensesGroupService.readGroupDetails(groupId);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(groupDetailsModel, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(groupDetailsModel, HttpStatus.OK);
+    }
 
 }

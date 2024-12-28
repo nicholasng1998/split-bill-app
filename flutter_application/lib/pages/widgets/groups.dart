@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/model/expenses_group_model.dart';
 import 'package:flutter_application/pages/widgets/add-group.dart';
+import 'package:flutter_application/services/user_expenses_group_service.dart';
 
 import '../../theme.dart';
 
-class GroupsScreen extends StatelessWidget {
+class GroupsScreen extends StatefulWidget {
+  @override
+  GroupsScreenState createState() => GroupsScreenState();
+}
+
+class GroupsScreenState extends State<GroupsScreen> {
+  List<ExpensesGroupModel> groupList = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    groupList = await readUserExpensesGroup(context) ?? [];
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,19 +51,53 @@ class GroupsScreen extends StatelessWidget {
                   ),
                   child: SingleChildScrollView(
                     child: Column(children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 15.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Melaka Trip",
-                              style: const TextStyle(
-                                  fontFamily: "WorkSansSemiBold",
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                            ),
-                          )),
+                      ...groupList.map((group) {
+                        return Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 15.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/groupDetailsScreen',
+                                  arguments:
+                                      group, // Passing the group object as an argument
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Colors.white, // Button background color
+                                  borderRadius: BorderRadius.circular(
+                                      8.0), // Rounded corners
+                                  border: Border.all(
+                                    color: Colors.blue, // Border color
+                                    width: 2.0, // Border width
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 1,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3), // Shadow position
+                                    ),
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 20.0),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "${group.groupName} - RM${group.totalExpenses}",
+                                    style: const TextStyle(
+                                        fontFamily: "WorkSansSemiBold",
+                                        fontSize: 16.0,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ));
+                      })
                     ]),
                   ),
                 )),

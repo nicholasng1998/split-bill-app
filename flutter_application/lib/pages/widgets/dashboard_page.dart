@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/pages/login_page.dart';
 import 'package:flutter_application/pages/widgets/account.dart';
 import 'package:flutter_application/pages/widgets/activity.dart';
+import 'package:flutter_application/pages/widgets/add-group.dart';
 import 'package:flutter_application/pages/widgets/groups.dart';
 import 'package:flutter_application/provider/auth_token_provider.dart';
 import 'package:flutter_application/theme.dart';
@@ -72,7 +73,7 @@ class _DashboardPageState extends State<DashboardPage> {
             friendsScreenKey: friendsScreenKey,
           ),
           GroupsScreen(),
-          ActivityScreen(),
+          AddGroupScreen(),
           ActivityScreen(),
           AccountScreen()
         ],
