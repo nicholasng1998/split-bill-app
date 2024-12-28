@@ -29,6 +29,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FriendsScreenState> friendsScreenKey =
+        GlobalKey<FriendsScreenState>();
+
     String? username = Provider.of<AuthTokenProvider>(context).authToken;
 
     return Scaffold(
@@ -65,7 +68,9 @@ class _DashboardPageState extends State<DashboardPage> {
       body: IndexedStack(
         index: _currentNavBarItem.index,
         children: <Widget>[
-          FriendsScreen(),
+          FriendsScreen(
+            friendsScreenKey: friendsScreenKey,
+          ),
           GroupsScreen(),
           ActivityScreen(),
           ActivityScreen(),

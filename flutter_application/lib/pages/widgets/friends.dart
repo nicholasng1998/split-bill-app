@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/model/user_model.dart';
 import 'package:flutter_application/pages/widgets/add-friends.dart';
 
+import '../../services/friends_service.dart';
 import '../../theme.dart';
 
-class FriendsScreen extends StatelessWidget {
+class FriendsScreen extends StatefulWidget {
+  final GlobalKey<FriendsScreenState> friendsScreenKey;
+
+  FriendsScreen({Key? key, required this.friendsScreenKey}) : super(key: key);
+
+  @override
+  FriendsScreenState createState() => FriendsScreenState();
+}
+
+class FriendsScreenState extends State<FriendsScreen> {
+  List<UserModel> friendsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    friendsList = await readFriends(context) ?? [];
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,19 +55,21 @@ class FriendsScreen extends StatelessWidget {
                   ),
                   child: SingleChildScrollView(
                     child: Column(children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 15.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Abu owes you RM100",
-                              style: const TextStyle(
-                                  fontFamily: "WorkSansSemiBold",
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                            ),
-                          )),
+                      ...friendsList.map((friend) {
+                        return Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 15.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${friend.username}",
+                                style: const TextStyle(
+                                    fontFamily: "WorkSansSemiBold",
+                                    fontSize: 16.0,
+                                    color: Colors.black),
+                              ),
+                            ));
+                      }).toList()
                     ]),
                   ),
                 )),
@@ -87,9 +114,9 @@ class FriendsScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () => {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(builder: (context) => AddFriendsScreen()),
+                  '/addFriendsScreen',
                 )
               },
             ),

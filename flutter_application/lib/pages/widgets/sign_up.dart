@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/model/common_response_model.dart';
+import 'package:flutter_application/services/user_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_application/theme.dart';
 import 'package:flutter_application/widgets/snackbar.dart';
@@ -291,7 +293,6 @@ class _SignUpState extends State<SignUp> {
                 child: MaterialButton(
                   highlightColor: Colors.transparent,
                   splashColor: CustomTheme.loginGradientEnd,
-                  //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                   child: const Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
@@ -303,7 +304,7 @@ class _SignUpState extends State<SignUp> {
                           fontFamily: 'WorkSansBold'),
                     ),
                   ),
-                  onPressed: () => _toggleSignUpButton(),
+                  onPressed: () => {_toggleSignUpButton(context)},
                 ),
               )
             ],
@@ -313,8 +314,26 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  void _toggleSignUpButton() {
-    CustomSnackBar(context, const Text('SignUp button pressed'));
+  void _toggleSignUpButton(BuildContext context) async {
+    String email = signupEmailController.text.trim();
+    String password = signupPasswordController.text.trim();
+    String confirmPassword = signupConfirmPasswordController.text.trim();
+    String mobileNo = signupPhoneNoController.text.trim();
+    String identityNo = signupNricNoController.text.trim();
+
+    CommonResponseModel? commonResponseModel =
+        await create(identityNo, mobileNo, email, password);
+
+    if (commonResponseModel != null) {
+      CustomSnackBar(context, const Text('Sign Up Successfully'));
+      signupEmailController.clear();
+      signupPasswordController.clear();
+      signupConfirmPasswordController.clear();
+      signupPhoneNoController.clear();
+      signupNricNoController.clear();
+    } else {
+      CustomSnackBar(context, const Text('Sign Up Failure'));
+    }
   }
 
   void _toggleSignup() {

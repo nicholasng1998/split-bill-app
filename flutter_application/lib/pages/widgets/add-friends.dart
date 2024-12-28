@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/services/friends_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../model/common_response_model.dart';
 import '../../theme.dart';
+import '../../widgets/snackbar.dart';
 
 const String EMAIL = "Email";
 const String PHONE_NO = "Phone Number";
 
 class AddFriendsScreen extends StatelessWidget {
+  TextEditingController signupEmailController = TextEditingController();
+  TextEditingController signupPhoneNoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +65,8 @@ class AddFriendsScreen extends StatelessWidget {
                                     left: 25.0,
                                     right: 25.0),
                                 child: TextField(
-                                  keyboardType: TextInputType.text,
+                                  controller: signupEmailController,
+                                  keyboardType: TextInputType.emailAddress,
                                   textCapitalization: TextCapitalization.words,
                                   autocorrect: false,
                                   style: const TextStyle(
@@ -92,6 +99,7 @@ class AddFriendsScreen extends StatelessWidget {
                                     left: 25.0,
                                     right: 25.0),
                                 child: TextField(
+                                  controller: signupPhoneNoController,
                                   autocorrect: false,
                                   style: const TextStyle(
                                       fontFamily: 'WorkSansSemiBold',
@@ -147,7 +155,6 @@ class AddFriendsScreen extends StatelessWidget {
                     child: MaterialButton(
                       highlightColor: Colors.transparent,
                       splashColor: CustomTheme.loginGradientEnd,
-                      //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 42.0),
@@ -159,7 +166,7 @@ class AddFriendsScreen extends StatelessWidget {
                               fontFamily: 'WorkSansBold'),
                         ),
                       ),
-                      onPressed: () => {},
+                      onPressed: () => {_addFriend(context)},
                     ),
                   )
                 ],
@@ -167,5 +174,20 @@ class AddFriendsScreen extends StatelessWidget {
             ]),
           )),
     );
+  }
+
+  void _addFriend(BuildContext context) async {
+    String email = signupEmailController.text.trim();
+    String mobileNo = signupPhoneNoController.text.trim();
+    CommonResponseModel? commonResponseModel = await addFriend(context, email);
+
+    if (commonResponseModel != null) {
+      CustomSnackBar(context, const Text('Add Friend Successfully'));
+      signupEmailController.clear();
+      signupPhoneNoController.clear();
+      Navigator.popAndPushNamed(context, '/dashboard');
+    } else {
+      CustomSnackBar(context, const Text('Add Friend Failure'));
+    }
   }
 }

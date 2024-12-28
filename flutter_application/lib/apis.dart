@@ -3,9 +3,13 @@ const String baseUrl = 'http://192.168.109.1:8082/api';
 const String LOGIN_API = baseUrl + '/login';
 
 // user
-const String USER_REQUEST_BASE = '/api/user';
+const String USER_REQUEST_BASE = baseUrl + '/user';
 const String USER_CREATE = USER_REQUEST_BASE + '/create';
 
+// friends
+const String FRIENDS_REQUEST_BASE = baseUrl + '/friends';
+const String FRIENDS_CREATE = FRIENDS_REQUEST_BASE + '/add';
+const String FRIENDS_READ = FRIENDS_REQUEST_BASE + '/get';
 
 //emergency-request
 const String EMERGENCY_REQUEST_BASE = '/protected/emergency-request';

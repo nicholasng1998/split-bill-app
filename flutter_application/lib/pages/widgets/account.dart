@@ -94,9 +94,9 @@ class AccountScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () => {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(builder: (context) => AddFriendsScreen()),
+                  '/addFriendsScreen',
                 )
               },
             ),

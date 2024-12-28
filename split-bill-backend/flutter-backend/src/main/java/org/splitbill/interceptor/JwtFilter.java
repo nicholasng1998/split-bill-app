@@ -32,6 +32,7 @@ public class JwtFilter extends GenericFilterBean {
         whitelistedApi.add("login");
         whitelistedApi.add("logout");
         whitelistedApi.add("user/create");
+        whitelistedApi.add("error");
     }
 
     public JwtFilter(String secretKey, UserFeignService userFeignService) {
@@ -46,12 +47,15 @@ public class JwtFilter extends GenericFilterBean {
         log.info("requestUrl: {}", requestUrl);
 
         boolean matchWhitelistApi = whitelistedApi.stream().anyMatch(requestUrl::contains);
+        log.info("matchWhitelistApi: {}", matchWhitelistApi);
         if (matchWhitelistApi) {
             chain.doFilter(servletRequest, servletResponse);
             return;
         }
 
         String authToken = httpServletRequest.getHeader(AUTH_TOKEN);
+        log.info("authToken: {}", authToken);
+        authToken = authToken.replace("\"", "");
 
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(secretKey.getBytes())

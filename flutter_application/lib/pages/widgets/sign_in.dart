@@ -41,10 +41,10 @@ class _SignInState extends State<SignIn> {
     String authToken = await login(username, password);
 
     if (authToken.isNotEmpty) {
-      Provider.of<AuthTokenProvider>(context, listen: false).login(username);
-      Navigator.push(
+      Provider.of<AuthTokenProvider>(context, listen: false).login(authToken);
+      Navigator.pushNamed(
         context,
-        MaterialPageRoute(builder: (context) => DashboardPage()),
+        '/dashboard',
       );
     } else {
       showLoginErrorDialog(context);

@@ -4,10 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import splitbill.bean.UserBean;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserBean, Integer> {
+
+    List<UserBean> findByUserIdIn(List<Integer> userIds);
 
     // Custom query to find a user by username
     Optional<UserBean> findByUsername(String username);
