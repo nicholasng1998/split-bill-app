@@ -56,11 +56,12 @@ Future<CommonResponseModel?> addUser(
     BuildContext context, String username, int groupId) async {
   final String url = USER_EXPENSES_GROUP_ADD_USER;
 
-  final String? authToken = Provider.of<AuthTokenProvider>(context).authToken;
+  final String? authToken =
+      Provider.of<AuthTokenProvider>(context, listen: false).authToken;
 
   var params = {
     'username': username,
-    'groupId': groupId,
+    'groupId': groupId.toString(),
   };
 
   try {

@@ -185,7 +185,7 @@ class AddFriendsScreen extends StatelessWidget {
       CustomSnackBar(context, const Text('Add Friend Successfully'));
       signupEmailController.clear();
       signupPhoneNoController.clear();
-      Navigator.popAndPushNamed(context, '/dashboard');
+      Navigator.popAndPushNamed(context, '/friendsScreen');
     } else {
       CustomSnackBar(context, const Text('Add Friend Failure'));
     }

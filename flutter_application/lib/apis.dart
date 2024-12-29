@@ -18,9 +18,19 @@ const String EXPENSES_GROUP_UPDATE_TO_STARTED =
     EXPENSES_GROUP_REQUEST_BASE + '/update-to-started';
 const String EXPENSES_GROUP_UPDATE_TO_CLOSED =
     EXPENSES_GROUP_REQUEST_BASE + '/update-to-closed';
+const String EXPENSES_GROUP_GET_GROUP_DETAILS =
+    EXPENSES_GROUP_REQUEST_BASE + '/get-group-details';
 
 // user-expenses-group
-const String USER_EXPENSES_GROUP_REQUEST_BASE = baseUrl + '/user-expenses-group';
-const String USER_EXPENSES_GROUP_READ = USER_EXPENSES_GROUP_REQUEST_BASE + '/read';
-const String USER_EXPENSES_GROUP_ADD_USER = USER_EXPENSES_GROUP_REQUEST_BASE + '/add-user';
+const String USER_EXPENSES_GROUP_REQUEST_BASE =
+    baseUrl + '/user-expenses-group';
+const String USER_EXPENSES_GROUP_READ =
+    USER_EXPENSES_GROUP_REQUEST_BASE + '/read';
+const String USER_EXPENSES_GROUP_ADD_USER =
+    USER_EXPENSES_GROUP_REQUEST_BASE + '/add-user';
 
+// itemization
+const String ITEMIZATION_REQUEST_BASE = baseUrl + '/itemization';
+const String ITEMIZATION_ADD = ITEMIZATION_REQUEST_BASE + '/add';
+const String ITEMIZATION_READ = ITEMIZATION_REQUEST_BASE + '/read';
+const String ITEMIZATION_UPDATE = ITEMIZATION_REQUEST_BASE + '/update';

@@ -14,15 +14,19 @@ class GroupDetailsModel {
 
   // Factory method to create an instance from JSON
   factory GroupDetailsModel.fromJson(Map<String, dynamic> json) {
-    var userList = json['userModels'] as List;
-    var expensesList = json['expensesDetailsModels'] as List;
+    var userList = json['userModels'] as List?;
+    var expensesList = json['expensesDetailsModels'] as List?;
 
     return GroupDetailsModel(
-      userModels: userList.map((user) => UserModel.fromJson(user)).toList(),
-      expensesDetailsModels: expensesList
-          .map((expense) => ExpensesDetailsModel.fromJson(expense))
-          .toList(),
-      isHost: json['isHost'],
+      userModels: userList != null
+          ? userList.map((user) => UserModel.fromJson(user)).toList()
+          : [],
+      expensesDetailsModels: expensesList != null
+          ? expensesList
+              .map((expense) => ExpensesDetailsModel.fromJson(expense))
+              .toList()
+          : [],
+      isHost: json['host'],
     );
   }
 

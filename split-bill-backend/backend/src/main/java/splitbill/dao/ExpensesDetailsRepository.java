@@ -17,10 +17,13 @@ public interface ExpensesDetailsRepository extends JpaRepository<ExpensesDetails
     List<ExpensesDetailsBean> findByCreatedBy(String createdBy);
 
     // Custom query to find all expenses by groupId
-    List<ExpensesDetailsBean> findByGroupId(String groupId);
+    List<ExpensesDetailsBean> findByGroupId(int groupId);
 
     // Custom query to find an expense by amount
     Optional<ExpensesDetailsBean> findByAmount(String amount);
 
     // You can add more custom methods depending on your requirements
+
+    // Custom query to find all expenses by groupId
+    List<ExpensesDetailsBean> findByGroupIdAndCreatedBy(int groupId, int userId);
 }

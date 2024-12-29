@@ -8,8 +8,10 @@ public interface ExpensesDetailsService {
 
     void addItemization(ExpensesDetailsModel expensesDetailsModel);
 
-    List<ExpensesDetailsModel> readItemization();
+    List<ExpensesDetailsModel> readItemization(int groupId);
 
-    void updateItemization(int itemizationId, ExpensesDetailsModel expensesDetailsModel);
+    List<ExpensesDetailsModel> readAllItemization(int groupId);
+
+    void updateItemization(ExpensesDetailsModel expensesDetailsModel);
 
 }

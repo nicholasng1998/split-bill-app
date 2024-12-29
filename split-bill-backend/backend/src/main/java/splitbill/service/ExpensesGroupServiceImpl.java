@@ -5,10 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import splitbill.bean.ExpensesDetailsBean;
 import splitbill.bean.ExpensesGroupBean;
 import splitbill.bean.UserBean;
 import splitbill.dao.ExpensesGroupRepository;
 import splitbill.dao.UserRepository;
+import splitbill.model.ExpensesDetailsModel;
 import splitbill.model.ExpensesGroupModel;
 import splitbill.model.GroupDetailsModel;
 import splitbill.model.UserModel;
@@ -25,6 +27,7 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
     private final ExpensesGroupRepository expensesGroupRepository;
     private final UserRepository userRepository;
     private final UserExpensesGroupService userExpensesGroupService;
+    private final ExpensesDetailsService expensesDetailsService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -104,11 +107,15 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
             throw new InternalError("user.not.found");
         }
 
+        List<ExpensesDetailsModel> expensesDetailsModels = expensesDetailsService.readAllItemization(groupId);
+        log.info("expensesDetailsModels: {}", expensesDetailsModels);
+
         boolean isHost = userBean.getUserId() == expensesGroupBean.getHost();
         log.info("isHost: {}", isHost);
 
         GroupDetailsModel groupDetailsModel = new GroupDetailsModel();
         groupDetailsModel.setUserModels(userModels);
+        groupDetailsModel.setExpensesDetailsModels(expensesDetailsModels);
         groupDetailsModel.setHost(isHost);
 
         log.info("groupDetailsModel: {}", groupDetailsModel);
