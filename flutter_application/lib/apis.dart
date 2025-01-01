@@ -5,6 +5,7 @@ const String LOGIN_API = baseUrl + '/login';
 // user
 const String USER_REQUEST_BASE = baseUrl + '/user';
 const String USER_CREATE = USER_REQUEST_BASE + '/create';
+const String USER_GET = USER_REQUEST_BASE + '/get';
 
 // friends
 const String FRIENDS_REQUEST_BASE = baseUrl + '/friends';

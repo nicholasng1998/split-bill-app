@@ -4,11 +4,15 @@ class LabelValueWidget extends StatelessWidget {
   final String label;
   final String value;
   final bool isPassword;
+  final bool isEditable;
+  final TextEditingController? controller;
 
   LabelValueWidget({
     required this.label,
     required this.value,
     this.isPassword = false,
+    this.isEditable = false,
+    this.controller,
   });
 
   @override
@@ -26,40 +30,28 @@ class LabelValueWidget extends StatelessWidget {
               color: Colors.grey[700],
             ),
           ),
-          Text(
-            isPassword ? '*' * value.length : value,
-            style: TextStyle(
-              fontSize: 16.0,
-              color: Colors.black,
-            ),
-          ),
+          isEditable
+              ? Container(
+                  width: 200.0,
+                  child: TextField(
+                    controller: controller,
+                    obscureText: isPassword, // Hide text for password
+                    decoration: InputDecoration(
+                      hintText: 'Enter your $label',
+                      border: OutlineInputBorder(),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                    ),
+                  ),
+                )
+              : Text(
+                  isPassword ? '*' * value.length : value,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  ),
+                ),
         ],
-      ),
-    );
-  }
-}
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Account Details')),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LabelValueWidget(label: 'Email:', value: 'test@gmail.com'),
-              LabelValueWidget(label: 'Password:', value: 'password123', isPassword: true),
-              LabelValueWidget(label: 'Phone Number:', value: '018-9022222'),
-            ],
-          ),
-        ),
       ),
     );
   }

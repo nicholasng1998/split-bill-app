@@ -10,6 +10,7 @@ import 'package:flutter_application/pages/widgets/friends.dart';
 import 'package:flutter_application/pages/widgets/group-action.dart';
 import 'package:flutter_application/pages/widgets/group-details.dart';
 import 'package:flutter_application/pages/widgets/groups.dart';
+import 'package:flutter_application/pages/widgets/payment_methods.dart';
 import 'package:flutter_application/provider/auth_token_provider.dart';
 import 'package:flutter_application/utils/my_navigator_observer.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/groupDetailsScreen': (context) => GroupDetailsScreen(),
         '/addUserToGroupScreen': (context) => AddUserToGroupScreen(),
         '/groupActionScreen': (context) => GroupActionScreen(),
+        '/viewPaymentMethod': (context) => ViewPaymentMethodScreen()
       },
       debugShowCheckedModeBanner: false,
       title: 'Split Bill Application',
