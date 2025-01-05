@@ -47,3 +47,8 @@ const String TRANSACTION_HISTORY_READ =
 // activity
 const String ACTIVITY_REQUEST_BASE = baseUrl + '/activity';
 const String ACTIVITY_READ = ACTIVITY_REQUEST_BASE + '/read';
+
+// p2p-setup
+const String P2P_SETUP_REQUEST_BASE = baseUrl + '/p2p-setup';
+const String P2P_SETUP_APPLY = P2P_SETUP_REQUEST_BASE + '/apply';
+const String P2P_SETUP_FIND_ALL = P2P_SETUP_REQUEST_BASE + '/find-all';

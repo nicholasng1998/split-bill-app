@@ -13,6 +13,7 @@ import splitbill.model.P2PSetupModel;
 import splitbill.util.AuthUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -36,6 +37,11 @@ public class P2PSetupServiceImpl implements P2PSetupService{
 
         P2PSetupBean p2PSetupBean = new P2PSetupBean();
         BeanUtils.copyProperties(p2PSetupModel, p2PSetupBean);
+        p2PSetupBean.setStatus(P2PSetupBean.STATUS.ACTIVE.toValue());
+        p2PSetupBean.setUserId(userBean.getUserId());
+        p2PSetupBean.setRemainingAmount(p2PSetupBean.getLendAmount());
+        p2PSetupBean.setCreatedDate(new Date());
+        p2PSetupBean.setUpdatedDate(new Date());
         p2PSetupRepository.save(p2PSetupBean);
 
         log.info("p2PSetupBean: {}", p2PSetupBean);

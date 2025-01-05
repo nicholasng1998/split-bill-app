@@ -98,6 +98,26 @@ class _AccountScreenState extends State<AccountScreen> {
                                   isEditable: true,
                                   controller: _nricController,
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 20.0, horizontal: 15.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/merchantApplicationScreen',
+                                      );
+                                    },
+                                    child: Center(
+                                        child: Text(
+                                      "Become P2P Merchant",
+                                      style: TextStyle(
+                                          fontFamily: "WorkSansSemiBold",
+                                          fontSize: 16.0,
+                                          color: Colors.blue),
+                                    )),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

@@ -29,4 +29,19 @@ public class P2PSetupBean extends Auditable {
     @Column(name = "REMAINING_AMOUNT")
     private BigDecimal remainingAmount;
 
+    public enum STATUS {
+
+        ACTIVE("active"),
+        INACTIVE("inactive");
+
+        private final String value;
+
+        STATUS(final String value) {
+            this.value = value;
+        }
+
+        public String toValue() {
+            return this.value;
+        }
+    }
 }

@@ -4,7 +4,10 @@ import 'package:flutter_application/pages/login_page.dart';
 import 'package:flutter_application/pages/widgets/account.dart';
 import 'package:flutter_application/pages/widgets/activity.dart';
 import 'package:flutter_application/pages/widgets/add-friends.dart';
+import 'package:flutter_application/pages/widgets/add-p2p.dart';
 import 'package:flutter_application/pages/widgets/add-user-to-group.dart';
+import 'package:flutter_application/pages/widgets/become_merchant.dart';
+import 'package:flutter_application/pages/widgets/merchant_application.dart';
 import 'package:flutter_application/pages/widgets/online-banking-confirmation.dart';
 import 'package:flutter_application/pages/widgets/online-banking.dart';
 import 'package:flutter_application/pages/widgets/dashboard_page.dart';
@@ -55,8 +58,11 @@ class MyApp extends StatelessWidget {
         '/viewPaymentMethod': (context) => ViewPaymentMethodScreen(),
         '/eWalletScreen': (context) => EWalletScreen(),
         '/onlineBankingScreen': (context) => OnlineBankingScreen(),
-        '/onlineBankingConfirmationScreen': (context) => OnlineBankingConfirmationScreen(),
-
+        '/onlineBankingConfirmationScreen': (context) =>
+            OnlineBankingConfirmationScreen(),
+        '/becomeMerchantScreen': (context) => BecomeMerchantScreen(),
+        '/merchantApplicationScreen': (context) => MerchantApplicationScreen(),
+        '/addP2PToGroupScreen': (context) => AddP2PToGroupScreen()
       },
       debugShowCheckedModeBanner: false,
       title: 'Split Bill Application',

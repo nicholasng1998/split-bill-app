@@ -217,7 +217,8 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: ElevatedButton(
           onPressed: () {
-            // Add your onPressed logic here
+            Navigator.pushNamed(context, '/addP2PToGroupScreen',
+                arguments: group);
           },
           child: Text("Add P2P"),
         ),
