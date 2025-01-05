@@ -12,4 +12,5 @@ public class ExpensesDetailsModel {
     private String itemName;
     private int createdBy;
     private int groupId;
+    private String createdByName;
 }

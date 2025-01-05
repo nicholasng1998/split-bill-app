@@ -6,7 +6,7 @@ class ExpensesGroupModel {
   final double totalExpenses;
   final double paidAmount;
   final double outstandingAmount;
-  final String status;
+  String status;
   final int host;
   final DateTime dueDate;
 

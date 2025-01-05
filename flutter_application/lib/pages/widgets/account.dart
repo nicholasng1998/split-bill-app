@@ -61,66 +61,48 @@ class _AccountScreenState extends State<AccountScreen> {
                       width: 400.0,
                       height: 420.0,
                       child: Card(
-                          elevation: 2.0,
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                        elevation: 2.0,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                LabelValueWidget(
+                                  label: 'Email:',
+                                  value: account.username,
+                                  isEditable: true,
+                                  controller: _emailController,
+                                ),
+                                LabelValueWidget(
+                                  label: 'Password:',
+                                  value: account.password,
+                                  isPassword: true,
+                                  isEditable: true,
+                                  controller: _passwordController,
+                                ),
+                                LabelValueWidget(
+                                  label: 'Phone Number:',
+                                  value: account.mobileNo,
+                                  isEditable: true,
+                                  controller: _phoneController,
+                                ),
+                                LabelValueWidget(
+                                  label: 'NRIC No.:',
+                                  value: account.identityNo,
+                                  isEditable: true,
+                                  controller: _nricController,
+                                ),
+                              ],
+                            ),
                           ),
-                          child: SingleChildScrollView(
-                              child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 20.0, horizontal: 15.0),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        LabelValueWidget(
-                                          label: 'Email:',
-                                          value: account.username,
-                                          isEditable: true,
-                                          controller: _emailController,
-                                        ),
-                                        LabelValueWidget(
-                                          label: 'Password:',
-                                          value: account.password,
-                                          isPassword: true,
-                                          isEditable: true,
-                                          controller: _passwordController,
-                                        ),
-                                        LabelValueWidget(
-                                          label: 'Phone Number:',
-                                          value: account.mobileNo,
-                                          isEditable: true,
-                                          controller: _phoneController,
-                                        ),
-                                        LabelValueWidget(
-                                          label: 'NRIC No.:',
-                                          value: account.identityNo,
-                                          isEditable: true,
-                                          controller: _nricController,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 20.0, horizontal: 15.0),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                '/viewPaymentMethod',
-                                              );
-                                            },
-                                            child: Center(
-                                                child: Text(
-                                              "View Payment Method",
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      "WorkSansSemiBold",
-                                                  fontSize: 16.0,
-                                                  color: Colors.blue),
-                                            )),
-                                          ),
-                                        )
-                                      ])))),
+                        ),
+                      ),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 40.0),

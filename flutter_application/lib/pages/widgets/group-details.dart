@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/model/expenses_group_model.dart';
 import 'package:flutter_application/model/group_details_model.dart';
+import 'package:flutter_application/model/transaction_history_model.dart';
 import 'package:flutter_application/services/expenses_group_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/common_response_model.dart';
 import '../../theme.dart';
-import '../../widgets/snackbar.dart';
 
 class GroupDetailsScreen extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
     if (result is GroupDetailsModel) {
       groupDetailsModel = result;
     } else {
-      groupDetailsModel = null; // Handle invalid or error case if needed
+      groupDetailsModel = null;
     }
 
     setState(() {});
@@ -59,8 +59,14 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
           ),
           child: AppBar(
             title: Text(
-              "Group: ${group.groupName}",
+              "${group.groupName.toUpperCase()}",
               style: TextStyle(color: Colors.white),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushNamed(context, "/dashboard");
+              },
             ),
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -68,15 +74,12 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
         ),
       ),
       body: Container(
-          padding: const EdgeInsets.only(top: 15.0),
-          child: Center(
-            child: Column(children: <Widget>[
-              Text(
-                  "Settlement Date: ${group.dueDate != null ? DateFormat('yyyy-MM-dd').format(group.dueDate) : 'Not available'}",
-                  style: const TextStyle(
-                      fontFamily: "WorkSansSemiBold",
-                      fontSize: 16.0,
-                      color: Colors.black)),
+        padding: const EdgeInsets.only(top: 15.0),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              settlementDateHeader(group),
+              groupStatusText(group),
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: SingleChildScrollView(
@@ -105,62 +108,312 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: Text(
-                    "Total Outstanding Amount: RM${group.outstandingAmount}",
-                    style: const TextStyle(
-                        fontFamily: "WorkSansSemiBold",
-                        fontSize: 16.0,
-                        color: Colors.black)),
+                  "Total Outstanding Amount: RM${group.outstandingAmount}",
+                  style: const TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      fontSize: 16.0,
+                      color: Colors.black),
+                ),
               ),
               Container(
-                  margin: const EdgeInsets.only(top: 20.0),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(children: <Widget>[
-                      if (groupDetailsModel?.isHost ?? false)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, '/addUserToGroupScreen',
-                                  arguments: group);
-                            },
-                            child: Text("Add User"),
+                margin: const EdgeInsets.only(top: 20.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(children: <Widget>[
+                    addUserButton(group),
+                    addP2PButton(group),
+                    addActionButton(group),
+                    startOrCloseGroup(context, group),
+                  ]),
+                ),
+              ),
+              Text(
+                "Transaction History",
+                style: const TextStyle(
+                    fontFamily: "WorkSansSemiBold",
+                    fontSize: 16.0,
+                    color: Colors.black),
+              ),
+              transactionHistory(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget transactionHistory() {
+    List<TransactionHistoryModel> transactionHistoryList = [];
+    return Flexible(
+      child: Container(
+        margin: const EdgeInsets.only(top: 20.0),
+        width: 350.0,
+        height: 600.0,
+        child: Card(
+          elevation: 2.0,
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                ...transactionHistoryList.map(
+                  (model) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 15.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Button background color
+                          borderRadius:
+                              BorderRadius.circular(8.0), // Rounded corners
+                          border: Border.all(
+                            color: Colors.blue, // Border color
+                            width: 2.0, // Border width
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: Offset(0, 3), // Shadow position
+                            ),
+                          ],
                         ),
-                      if (groupDetailsModel?.isHost ?? false)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Add your onPressed logic here
-                            },
-                            child: Text("Add PSP"),
-                          ),
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/groupActionScreen',
-                                arguments: group);
-                          },
-                          child: Text("Action"),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 20.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(""),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Add your onPressed logic here
-                          },
-                          child: Text("Transaction History"),
-                        ),
-                      ),
-                    ]),
-                  )),
-            ]),
-          )),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget addActionButton(ExpensesGroupModel group) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/groupActionScreen', arguments: group);
+        },
+        child: Text("Action"),
+      ),
+    );
+  }
+
+  Widget addP2PButton(ExpensesGroupModel group) {
+    if (groupDetailsModel?.isHost ?? false) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            // Add your onPressed logic here
+          },
+          child: Text("Add P2P"),
+        ),
+      );
+    }
+    return Text("");
+  }
+
+  Widget addUserButton(ExpensesGroupModel group) {
+    if (groupDetailsModel?.isHost ?? false) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            if (group.status != "waiting") {
+              showErrorDialog(context, "Failed",
+                  "Group status is started or closed. Please do not add more user to this group!");
+              return;
+            }
+
+            Navigator.pushNamed(context, '/addUserToGroupScreen',
+                arguments: group);
+          },
+          child: Text("Add User"),
+        ),
+      );
+    }
+    return Text("");
+  }
+
+  Widget groupStatusText(ExpensesGroupModel group) {
+    return Text(
+      "Group Status: ${group.status.toUpperCase()}",
+      style: const TextStyle(
+          fontFamily: "WorkSansSemiBold", fontSize: 20.0, color: Colors.black),
+    );
+  }
+
+  Widget settlementDateHeader(ExpensesGroupModel group) {
+    return Text(
+      "Settlement Date: ${DateFormat('yyyy-MM-dd').format(group.dueDate)}",
+      style: const TextStyle(
+          fontFamily: "WorkSansSemiBold", fontSize: 20.0, color: Colors.black),
+    );
+  }
+
+  Widget startOrCloseGroup(BuildContext context, ExpensesGroupModel group) {
+    if (group.status == "waiting") {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            updateToStarted(context, group.groupId);
+            showSuccessDialog(
+                context, "Success", "Updated group status to STARTED");
+            setState(() {
+              group.status = "started";
+            });
+          },
+          child: Text("Start Group"),
+        ),
+      );
+    } else if (group.status == "started") {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            updateToClosed(context, group.groupId);
+            showSuccessDialog(
+                context, "Success", "Updated group status to CLOSED");
+            setState(() {
+              group.status = "closed";
+            });
+          },
+          child: Text("Close Group"),
+        ),
+      );
+    } else if (group.status == "closed") {
+      return Text("");
+    }
+    return Text("");
+  }
+
+  void showSuccessDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.greenAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => {
+                  Navigator.pop(context),
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Colors.redAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

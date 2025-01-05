@@ -8,5 +8,5 @@ public interface TransactionHistoryService {
 
     void makePayment(TransactionHistoryModel transactionHistoryModel);
 
-    List<TransactionHistoryModel> readTransactionHistory();
+    List<TransactionHistoryModel> readTransactionHistory(TransactionHistoryModel transactionHistoryModel);
 }

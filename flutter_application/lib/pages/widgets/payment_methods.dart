@@ -6,11 +6,44 @@ import '../../model/common_response_model.dart';
 import '../../theme.dart';
 import '../../widgets/snackbar.dart';
 
-class ViewPaymentMethodScreen extends StatelessWidget {
-  final List<String> availablePaymentMethods = ['Touch N Go', 'Cards'];
+class ViewPaymentMethodScreen extends StatefulWidget {
+  @override
+  ViewPaymentMethodScreenState createState() => ViewPaymentMethodScreenState();
+}
+
+class ViewPaymentMethodScreenState extends State<ViewPaymentMethodScreen> {
+  bool _isOnlineBankingOn = false;
+  bool _isEwalletOn = false;
 
   @override
   Widget build(BuildContext context) {
+    void _goToTouchNGo(BuildContext context) {
+      print('Going to Touch N Go!');
+      Navigator.pushNamed(
+        context,
+        '/touchNGoScreen',
+      );
+    }
+
+    void _goToCards(BuildContext context) {
+      print('Going to Cards!');
+      Navigator.pushNamed(
+        context,
+        '/addCardScreen',
+      );
+    }
+
+    // final List<Map<String, dynamic>> availablePaymentMethods = [
+    //   {
+    //     "text": "Touch N Go",
+    //     "function": _goToTouchNGo,
+    //   },
+    //   {
+    //     "text": "Cards",
+    //     "function": _goToCards,
+    //   },
+    // ];
+
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
@@ -90,44 +123,55 @@ class ViewPaymentMethodScreen extends StatelessWidget {
                   ),
                   child: SingleChildScrollView(
                       child: Column(children: <Widget>[
-                    ...availablePaymentMethods.map((method) {
-                      return Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 15.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color:
-                                      Colors.white, // Button background color
-                                  borderRadius: BorderRadius.circular(
-                                      8.0), // Rounded corners
-                                  border: Border.all(
-                                    color: Colors.blue, // Border color
-                                    width: 2.0, // Border width
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 1,
-                                      blurRadius: 5,
-                                      offset: Offset(0, 3), // Shadow position
-                                    ),
-                                  ]),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 12.0, horizontal: 20.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "${method}",
-                                  style: const TextStyle(
-                                      fontFamily: "WorkSansSemiBold",
-                                      fontSize: 16.0,
-                                      color: Colors.black),
-                                ),
-                              )));
-                    })
+                    onlineBankingSwitch(),
+                    eWalletSwitch()
                   ])),
                 ),
               ),
             ]))));
+  }
+
+  void _toggleSwitch(bool value) {
+    setState(() {
+      _isOnlineBankingOn = value;
+    });
+  }
+
+  Widget onlineBankingSwitch() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
+      child: Row(
+        children: [
+          Text(
+            _isOnlineBankingOn ? 'Online Banking ON' : 'Online Banking OFF',
+            style: TextStyle(fontSize: 20),
+          ),
+          Spacer(),
+          Switch(
+            value: _isOnlineBankingOn,
+            onChanged: _toggleSwitch,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget eWalletSwitch() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
+      child: Row(
+        children: [
+          Text(
+            _isOnlineBankingOn ? 'E-Wallet ON' : 'E-Wallet OFF',
+            style: TextStyle(fontSize: 20),
+          ),
+          Spacer(),
+          Switch(
+            value: _isOnlineBankingOn,
+            onChanged: _toggleSwitch,
+          ),
+        ],
+      ),
+    );
   }
 }

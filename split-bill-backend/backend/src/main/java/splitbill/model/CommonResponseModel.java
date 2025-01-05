@@ -10,4 +10,10 @@ import lombok.NoArgsConstructor;
 public class CommonResponseModel {
 
     private String status;
+    private String errorMessage;
+
+    public CommonResponseModel(String status) {
+        this.status = status;
+        this.errorMessage = null;
+    }
 }

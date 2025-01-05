@@ -41,11 +41,8 @@ class _SignInState extends State<SignIn> {
     String authToken = await login(username, password);
 
     if (authToken.isNotEmpty) {
-      Provider.of<AuthTokenProvider>(context, listen: false).login(authToken);
-      Navigator.pushNamed(
-        context,
-        '/dashboard',
-      );
+      showLoginSuccessDialog(
+          context, "Success", "Login Successfully!", authToken);
     } else {
       showLoginErrorDialog(context);
     }
@@ -185,7 +182,9 @@ class _SignInState extends State<SignIn> {
                           fontFamily: 'WorkSansBold'),
                     ),
                   ),
-                  onPressed: () => {_login(context)},
+                  onPressed: () => {
+                    _login(context),
+                  },
                 ),
               ),
             ],
@@ -226,6 +225,72 @@ class _SignInState extends State<SignIn> {
     setState(() {
       _obscureTextPassword = !_obscureTextPassword;
     });
+  }
+
+  void showLoginSuccessDialog(
+      BuildContext context, String title, String text, String authToken) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.greenAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => {
+                  Navigator.pop(context),
+                  Provider.of<AuthTokenProvider>(context, listen: false)
+                      .login(authToken),
+                  Navigator.pushNamed(
+                    context,
+                    '/dashboard',
+                  ),
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

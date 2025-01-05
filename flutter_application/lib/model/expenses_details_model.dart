@@ -7,6 +7,7 @@ class ExpensesDetailsModel {
   final String itemName;
   final int createdBy;
   final int groupId;
+  final String createdByName;
 
   // Constructor
   ExpensesDetailsModel({
@@ -15,6 +16,7 @@ class ExpensesDetailsModel {
     required this.itemName,
     required this.createdBy,
     required this.groupId,
+    required this.createdByName,
   });
 
   // Factory method to create an instance from JSON
@@ -25,6 +27,7 @@ class ExpensesDetailsModel {
       itemName: json['itemName'],
       createdBy: json['createdBy'],
       groupId: json['groupId'],
+      createdByName: json['createdByName'],
     );
   }
 
@@ -36,6 +39,7 @@ class ExpensesDetailsModel {
       'itemName': itemName,
       'createdBy': createdBy,
       'groupId': groupId,
+      'createdByName': createdByName,
     };
   }
 }

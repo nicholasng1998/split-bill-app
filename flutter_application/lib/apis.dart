@@ -35,3 +35,15 @@ const String ITEMIZATION_REQUEST_BASE = baseUrl + '/itemization';
 const String ITEMIZATION_ADD = ITEMIZATION_REQUEST_BASE + '/add';
 const String ITEMIZATION_READ = ITEMIZATION_REQUEST_BASE + '/read';
 const String ITEMIZATION_UPDATE = ITEMIZATION_REQUEST_BASE + '/update';
+
+// transaction-history
+const String TRANSACTION_HISTORY_REQUEST_BASE =
+    baseUrl + '/transaction-history';
+const String TRANSACTION_HISTORY_CREATE =
+    TRANSACTION_HISTORY_REQUEST_BASE + '/create';
+const String TRANSACTION_HISTORY_READ =
+    TRANSACTION_HISTORY_REQUEST_BASE + '/read';
+
+// activity
+const String ACTIVITY_REQUEST_BASE = baseUrl + '/activity';
+const String ACTIVITY_READ = ACTIVITY_REQUEST_BASE + '/read';

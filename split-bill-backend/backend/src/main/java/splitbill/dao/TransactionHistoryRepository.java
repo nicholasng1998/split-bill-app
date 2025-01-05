@@ -1,7 +1,10 @@
 package splitbill.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import splitbill.bean.FriendsBean;
 import splitbill.bean.TransactionHistoryBean;
 
 import java.util.List;
@@ -25,5 +28,10 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
     // Custom query to find a transaction by transactionAmount
     Optional<TransactionHistoryBean> findByTransactionAmount(String transactionAmount);
 
-    // You can add more custom methods depending on your requirements
+    // Custom query to find transactions by groupId
+    List<TransactionHistoryBean> findAllByUserIdAndGroupId(int userId, int groupId);
+
+    @Query(value = "select * from transaction_history where date(transaction_date) = :transactionDate and group_id = :groupId", nativeQuery = true)
+    List<TransactionHistoryBean> findAllByTransactionDateAndGroupId(@Param("transactionDate") String transactionDate, @Param("groupId") int groupId);
+
 }

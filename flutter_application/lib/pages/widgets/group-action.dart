@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/widgets/sign_in.dart';
-import 'package:flutter_application/pages/widgets/sign_up.dart';
+import 'package:flutter_application/model/transaction_history_model.dart';
 import 'package:flutter_application/theme.dart';
-import 'package:flutter_application/utils/bubble_indicator_painter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_application/services/itemization_service.dart';
 import '../../model/expenses_details_model.dart';
 import '../../model/expenses_group_model.dart';
-import '../../widgets/snackbar.dart';
 
 import '../../model/common_response_model.dart';
 
@@ -17,13 +14,15 @@ class GroupActionScreen extends StatefulWidget {
 }
 
 class _GroupActionScreenState extends State<GroupActionScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  List<ExpensesDetailsModel> tab1Data = [];
-  List<ExpensesDetailsModel> tab2Data = [];
-  List<ExpensesDetailsModel> tab3Data = [];
+    with TickerProviderStateMixin {
+  // Initialize
+  String selectedPaymentMethod = 'Online Banking';
+  List<String> paymentMethods = ['Online Banking', 'E-Wallet'];
 
-  bool isLoading = true; // Add a loading state
+  late TabController _tabController;
+  List<ExpensesDetailsModel> tab2Data = [];
+
+  bool isLoading = true;
   TextEditingController paymentAmountController = TextEditingController();
   TextEditingController paymentMethodController = TextEditingController();
 
@@ -45,28 +44,29 @@ class _GroupActionScreenState extends State<GroupActionScreen>
       if (_tabController.indexIsChanging) {
         if (_tabController.index == 1) {
           setState(() {
-            isLoading = true; // Set loading state true when fetching data
+            isLoading = true;
           });
-          tab2Data = await readItemization(context, group.groupId) ??
-              []; // Fetch data when tab changes
+          tab2Data = await readItemization(context, group.groupId) ?? [];
           setState(() {
-            isLoading = false; // Set loading state false once data is loaded
+            isLoading = false;
           });
         }
       }
     });
     setState(() {
-      isLoading = true; // Set loading state true when fetching data
+      isLoading = true;
     });
-    tab2Data = await readItemization(context, group.groupId) ??
-        []; // Fetch data for the first tab initially
+    tab2Data = await readItemization(context, group.groupId) ?? [];
     setState(() {
-      isLoading = false; // Set loading state false once data is loaded
+      isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final ExpensesGroupModel group =
+        ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100),
@@ -82,6 +82,13 @@ class _GroupActionScreenState extends State<GroupActionScreen>
             ),
           ),
           child: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushNamed(context, "/groupDetailsScreen",
+                    arguments: group);
+              },
+            ),
             backgroundColor: Colors.transparent,
             elevation: 0,
             title: Text('Action'),
@@ -100,7 +107,7 @@ class _GroupActionScreenState extends State<GroupActionScreen>
         controller: _tabController,
         children: [
           _buildMakePaymentWidget(),
-          _buildTabContent(tab2Data),
+          _buildItemListContent(tab2Data),
           _buildAddItemWidget(),
         ],
       ),
@@ -135,8 +142,7 @@ class _GroupActionScreenState extends State<GroupActionScreen>
                                   right: 25.0),
                               child: TextField(
                                 controller: paymentAmountController,
-                                keyboardType: TextInputType.text,
-                                textCapitalization: TextCapitalization.words,
+                                keyboardType: TextInputType.number,
                                 autocorrect: false,
                                 style: const TextStyle(
                                     fontFamily: 'WorkSansSemiBold',
@@ -167,30 +173,7 @@ class _GroupActionScreenState extends State<GroupActionScreen>
                                   bottom: 20.0,
                                   left: 25.0,
                                   right: 25.0),
-                              child: TextField(
-                                controller: paymentMethodController,
-                                keyboardType: TextInputType.number,
-                                autocorrect: false,
-                                style: const TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0,
-                                    color: Colors.black),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  icon: const Icon(
-                                    FontAwesomeIcons.moneyBill,
-                                    color: Colors.black,
-                                  ),
-                                  hintText: "Payment Method",
-                                  hintStyle: const TextStyle(
-                                      fontFamily: 'WorkSansSemiBold',
-                                      fontSize: 16.0),
-                                ),
-                                onSubmitted: (_) {
-                                  ;
-                                },
-                                textInputAction: TextInputAction.go,
-                              ),
+                              child: paymentMethodDropdown(),
                             ),
                           ],
                         ),
@@ -236,7 +219,9 @@ class _GroupActionScreenState extends State<GroupActionScreen>
                             fontFamily: 'WorkSansBold'),
                       ),
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      makePaymentNext(context),
+                    },
                   ),
                 )
               ],
@@ -383,17 +368,14 @@ class _GroupActionScreenState extends State<GroupActionScreen>
         ));
   }
 
-  Widget _buildTabContent(List<ExpensesDetailsModel> expensesDetailsModels) {
+  Widget _buildItemListContent(
+      List<ExpensesDetailsModel> expensesDetailsModels) {
     if (isLoading) {
-      return Center(
-          child:
-              CircularProgressIndicator()); // Show loading indicator while fetching data
+      return Center(child: CircularProgressIndicator());
     }
 
     return expensesDetailsModels.isEmpty
-        ? Center(
-            child:
-                Text("No Data")) // Show loading indicator while fetching data
+        ? Center(child: Text("No Data"))
         : SingleChildScrollView(
             child: Container(
                 margin: const EdgeInsets.only(top: 20.0),
@@ -410,39 +392,30 @@ class _GroupActionScreenState extends State<GroupActionScreen>
                       ...expensesDetailsModels.map((expensesDetailsModel) {
                         return Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 15.0),
+                                vertical: 10.0, horizontal: 15.0),
                             child: GestureDetector(
                               onTap: () {},
                               child: Container(
                                   decoration: BoxDecoration(
-                                      color: Colors
-                                          .white, // Button background color
-                                      borderRadius: BorderRadius.circular(
-                                          8.0), // Rounded corners
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8.0),
                                       border: Border.all(
-                                        color: Colors.blue, // Border color
-                                        width: 2.0, // Border width
+                                        color: Colors.blue,
+                                        width: 2.0,
                                       ),
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.grey.withOpacity(0.3),
                                           spreadRadius: 1,
                                           blurRadius: 5,
-                                          offset:
-                                              Offset(0, 3), // Shadow position
+                                          offset: Offset(0, 3),
                                         ),
                                       ]),
                                   padding: EdgeInsets.symmetric(
                                       vertical: 12.0, horizontal: 20.0),
                                   child: Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "${expensesDetailsModel.itemName} - RM${expensesDetailsModel.amount}",
-                                      style: const TextStyle(
-                                          fontFamily: "WorkSansSemiBold",
-                                          fontSize: 16.0,
-                                          color: Colors.black),
-                                    ),
+                                    child: itemListText(expensesDetailsModel),
                                   )),
                             ));
                       }).toList()
@@ -450,6 +423,36 @@ class _GroupActionScreenState extends State<GroupActionScreen>
                   ),
                 )),
           );
+  }
+
+  Widget itemListText(ExpensesDetailsModel expensesDetailsModel) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${expensesDetailsModel.itemName}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Added By: ${expensesDetailsModel.createdByName}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        Spacer(),
+        Container(
+          height: 42,
+          alignment: Alignment.center,
+          child: Text(
+            'RM ${expensesDetailsModel.amount.toStringAsFixed(2)}',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
   }
 
   void _addItem(BuildContext context) async {
@@ -461,22 +464,214 @@ class _GroupActionScreenState extends State<GroupActionScreen>
 
     int? amountInt = int.tryParse(amount);
     if (amountInt == null) {
-      // Show an error message if the amount is not valid
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter a valid amount")),
-      );
-      return; // Exit the function if amount is not valid
+      showErrorDialog(context, "Failed", "Please input amount!");
+      return;
+    }
+
+    if (itemName.isEmpty) {
+      showErrorDialog(context, "Failed", "Please input item name!");
+      return;
+    }
+
+    if (group.status != "waiting") {
+      showErrorDialog(context, "Failed",
+          "Group already started or closed, please do not add more item!");
+      return;
     }
 
     CommonResponseModel? commonResponseModel =
         await addItemization(context, amountInt, itemName, group.groupId);
 
     if (commonResponseModel != null) {
-      CustomSnackBar(context, const Text('Add Item Successfully'));
+      showSuccessDialog(context, "Success", "Add item successfully!");
       itemAmountController.clear();
       itemNameController.clear();
     } else {
-      CustomSnackBar(context, const Text('Add Friend Failure'));
+      showErrorDialog(context, "Failed", "Fail to add item!");
     }
+  }
+
+  Widget paymentMethodDropdown() {
+    return Row(
+      children: [
+        Icon(
+          FontAwesomeIcons.moneyBill,
+          color: Colors.black,
+        ),
+        SizedBox(width: 20),
+        DropdownButton<String>(
+          value: selectedPaymentMethod,
+          onChanged: (String? newValue) {
+            setState(() {
+              selectedPaymentMethod = newValue!;
+            });
+          },
+          items: paymentMethods.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          underline: Container(),
+        ),
+      ],
+    );
+  }
+
+  void makePaymentNext(BuildContext context) {
+    final ExpensesGroupModel group =
+        ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
+
+    TransactionHistoryModel transactionHistoryModel = TransactionHistoryModel(
+      transactionId: 0,
+      userId: 0,
+      transactionType: '',
+      transactionDate: DateTime.now(),
+      transactionAmount: 0.0,
+      groupId: 0,
+    );
+
+    double? amountDouble = double.tryParse(paymentAmountController.text.trim());
+
+    transactionHistoryModel.transactionType = selectedPaymentMethod;
+    transactionHistoryModel.groupId = group.groupId;
+    transactionHistoryModel.transactionAmount = amountDouble ?? 0;
+
+    if (amountDouble == null) {
+      showErrorDialog(context, "Failed", "Please input payment amount!");
+      return;
+    }
+
+    if (group.status != "started") {
+      showErrorDialog(context, "Failed",
+          "The group not yet started. Please ask the host to start the group!");
+      return;
+    }
+
+    paymentAmountController.clear();
+
+    if (selectedPaymentMethod == "E-Wallet") {
+      Navigator.pushNamed(context, "/eWalletScreen",
+          arguments: [transactionHistoryModel, group]);
+    } else if (selectedPaymentMethod == "Online Banking") {
+      Navigator.pushNamed(context, "/onlineBankingScreen",
+          arguments: [transactionHistoryModel, group]);
+    }
+  }
+
+  void showSuccessDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.greenAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => {
+                  Navigator.pop(context),
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Colors.redAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

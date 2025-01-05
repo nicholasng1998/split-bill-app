@@ -94,12 +94,12 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: Colors
-                                            .white, // Button background color
+                                            .white,
                                         borderRadius: BorderRadius.circular(
-                                            8.0), // Rounded corners
+                                            8.0),
                                         border: Border.all(
-                                          color: Colors.blue, // Border color
-                                          width: 2.0, // Border width
+                                          color: Colors.blue,
+                                          width: 2.0,
                                         ),
                                         boxShadow: [
                                           BoxShadow(
@@ -107,7 +107,7 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                                             spreadRadius: 1,
                                             blurRadius: 5,
                                             offset:
-                                                Offset(0, 3), // Shadow position
+                                                Offset(0, 3),
                                           ),
                                         ]),
                                     padding: EdgeInsets.symmetric(

@@ -41,8 +41,8 @@ class GroupsScreenState extends State<GroupsScreen> {
           Flexible(
             child: Container(
                 margin: const EdgeInsets.only(top: 20.0),
-                width: 300.0,
-                height: 350.0,
+                width: 350.0,
+                height: 450.0,
                 child: Card(
                   elevation: 2.0,
                   color: Colors.white,
@@ -54,7 +54,7 @@ class GroupsScreenState extends State<GroupsScreen> {
                       ...groupList.map((group) {
                         return Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 15.0),
+                                vertical: 10.0, horizontal: 15.0),
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(

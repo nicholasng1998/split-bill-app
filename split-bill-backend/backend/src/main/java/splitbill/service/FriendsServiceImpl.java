@@ -26,6 +26,7 @@ public class FriendsServiceImpl implements FriendsService {
 
     private final FriendsRepository friendsRepository;
     private final UserRepository userRepository;
+    private final ActivityService activityService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -55,6 +56,8 @@ public class FriendsServiceImpl implements FriendsService {
 
         log.info("friendsBean: {}", friendsBean);
         friendsRepository.save(friendsBean);
+
+        activityService.saveActivity("Add Friend", String.format("You have added %s.", friendUserBean.getUsername()));
     }
 
     @Override

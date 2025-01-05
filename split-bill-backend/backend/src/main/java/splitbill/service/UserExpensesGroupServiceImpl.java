@@ -6,8 +6,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import splitbill.bean.ExpensesGroupBean;
 import splitbill.bean.UserBean;
 import splitbill.bean.UserExpensesGroupBean;
+import splitbill.dao.ExpensesGroupRepository;
 import splitbill.dao.UserExpensesGroupRepository;
 import splitbill.dao.UserRepository;
 import splitbill.model.ExpensesGroupModel;
@@ -25,6 +27,9 @@ public class UserExpensesGroupServiceImpl implements UserExpensesGroupService {
 
     private final UserExpensesGroupRepository userExpensesGroupRepository;
     private final UserRepository userRepository;
+    private final ActivityService activityService;
+
+    private final ExpensesGroupRepository expensesGroupRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -40,6 +45,10 @@ public class UserExpensesGroupServiceImpl implements UserExpensesGroupService {
         userExpensesGroupBean.setGroupId(groupId);
         userExpensesGroupBean.setJoinDate(new Date());
         userExpensesGroupRepository.save(userExpensesGroupBean);
+
+        ExpensesGroupBean expensesGroupBean = expensesGroupRepository.getOne(groupId);
+        log.info("expensesGroupBean: {}", expensesGroupBean);
+        activityService.saveActivity("Add User To Group", String.format("You have added %s to %s.", username, expensesGroupBean.getGroupName()));
     }
 
     @Override

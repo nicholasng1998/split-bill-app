@@ -53,7 +53,7 @@ public class ExpensesDetailsServiceImpl implements ExpensesDetailsService {
             throw new InternalError("user.not.found");
         }
 
-        List<ExpensesDetailsBean> expensesDetailsBeans = expensesDetailsRepository.findByGroupIdAndCreatedBy(groupId, userBean.getUserId());
+        List<ExpensesDetailsBean> expensesDetailsBeans = expensesDetailsRepository.findByGroupId(groupId);
         log.info("expensesDetailsBeans: {}", expensesDetailsBeans);
 
         if (CollectionUtils.isEmpty(expensesDetailsBeans)) {
@@ -64,6 +64,11 @@ public class ExpensesDetailsServiceImpl implements ExpensesDetailsService {
         expensesDetailsBeans.forEach(bean -> {
             ExpensesDetailsModel expensesDetailsModel = new ExpensesDetailsModel();
             BeanUtils.copyProperties(bean, expensesDetailsModel);
+
+            UserBean eachUser = userRepository.findById(bean.getCreatedBy()).orElse(null);
+            if (eachUser != null) {
+                expensesDetailsModel.setCreatedByName(eachUser.getUsername());
+            }
             expensesDetailsModels.add(expensesDetailsModel);
         });
 

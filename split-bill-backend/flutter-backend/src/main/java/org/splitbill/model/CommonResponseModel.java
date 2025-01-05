@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class CommonResponseModel {
 
     private String status;
+    private String errorMessage;
 }

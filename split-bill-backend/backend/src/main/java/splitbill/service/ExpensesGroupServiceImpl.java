@@ -67,7 +67,7 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
             throw new InternalError("invalid.request");
         }
 
-        expensesGroupBean.setStatus(ExpensesGroupBean.STATUS.WAITING.toValue());
+        expensesGroupBean.setStatus(ExpensesGroupBean.STATUS.STARTED.toValue());
         expensesGroupRepository.save(expensesGroupBean);
     }
 

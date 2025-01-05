@@ -10,6 +10,7 @@ import java.util.Date;
 
 @Data
 @Audited
+@MappedSuperclass
 public class Auditable {
 
     @CreatedDate
