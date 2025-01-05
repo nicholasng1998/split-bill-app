@@ -4,6 +4,8 @@ class UserModel {
   final String mobileNo;
   final String username;
   final String password;
+  final String bankAccountNumber;
+  final String bankName;
 
   // Constructor
   UserModel({
@@ -12,6 +14,8 @@ class UserModel {
     required this.mobileNo,
     required this.username,
     required this.password,
+    required this.bankAccountNumber,
+    required this.bankName,
   });
 
   // Convert a JSON map to a UserModel object (fromJson)
@@ -22,6 +26,8 @@ class UserModel {
       mobileNo: json['mobileNo'],
       username: json['username'],
       password: json['password'],
+      bankAccountNumber: json['bankAccountNumber'],
+      bankName: json['bankName'],
     );
   }
 
@@ -33,6 +39,8 @@ class UserModel {
       'mobileNo': mobileNo,
       'username': username,
       'password': password,
+      'bankAccountNumber': bankAccountNumber,
+      'bankName': bankName,
     };
   }
 }

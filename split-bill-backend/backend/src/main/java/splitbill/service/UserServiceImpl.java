@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import splitbill.bean.BankAccountDetailsBean;
 import splitbill.bean.UserBean;
+import splitbill.dao.BankAccountDetailsRepository;
 import splitbill.dao.UserRepository;
 import splitbill.model.UserModel;
 
@@ -15,6 +17,7 @@ import splitbill.model.UserModel;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BankAccountDetailsRepository bankAccountDetailsRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -23,6 +26,12 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userModel, userBean);
         log.info("userBean: {}", userBean);
         userRepository.save(userBean);
+
+        BankAccountDetailsBean bankAccountDetailsBean = new BankAccountDetailsBean();
+        bankAccountDetailsBean.setBankName(userModel.getBankName());
+        bankAccountDetailsBean.setBankAccountNumber(userModel.getBankAccountNumber());
+        log.info("bankAccountDetailsBean: {}", bankAccountDetailsBean);
+        bankAccountDetailsRepository.save(bankAccountDetailsBean);
     }
 
     @Override
@@ -33,7 +42,17 @@ public class UserServiceImpl implements UserService {
         if (userBean != null) {
             BeanUtils.copyProperties(userBean, userModel);
             log.info("userModel: {}", userModel);
+
+            BankAccountDetailsBean bankAccountDetailsBean = bankAccountDetailsRepository.findByUserId(userBean.getUserId()).orElse(null);
+            if (bankAccountDetailsBean == null) {
+                return userModel;
+            }
+
+            userModel.setBankName(bankAccountDetailsBean.getBankName());
+            userModel.setBankAccountNumber(bankAccountDetailsBean.getBankAccountNumber());
+            return userModel;
         }
+
         return userModel;
     }
 }

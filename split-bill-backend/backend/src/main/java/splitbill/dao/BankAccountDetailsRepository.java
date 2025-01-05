@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface BankAccountDetailsRepository extends JpaRepository<BankAccountDetailsBean, Integer> {
 
     // Custom query to find a BankAccountDetailsBean by userId
-    Optional<BankAccountDetailsBean> findByUserId(String userId);
+    Optional<BankAccountDetailsBean> findByUserId(int userId);
 
     // Custom query to find all BankAccountDetailsBeans by bankName
     List<BankAccountDetailsBean> findByBankName(String bankName);

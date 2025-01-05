@@ -11,15 +11,22 @@ import 'package:flutter_application/provider/auth_token_provider.dart';
 /**
  * Create User Function
  */
-Future<CommonResponseModel?> create(String identityNo, String mobileNo,
-    String username, String password) async {
+Future<CommonResponseModel?> create(
+    String identityNo,
+    String mobileNo,
+    String username,
+    String password,
+    String bankAccountNumber,
+    String bankName) async {
   final String url = USER_CREATE;
 
   final Map<String, dynamic> requestData = {
     'username': username,
     'password': password,
     'identityNo': identityNo,
-    'mobileNo': mobileNo
+    'mobileNo': mobileNo,
+    'bankAccountNumber': bankAccountNumber,
+    'bankName': bankName
   };
 
   try {

@@ -8,7 +8,8 @@ public class UserModel {
     private String identityNo;
     private String mobileNo;
     private String username;
-
     private String password;
+    private String bankAccountNumber;
+    private String bankName;
 
 }

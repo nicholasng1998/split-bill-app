@@ -32,6 +32,8 @@ class _SignUpState extends State<SignUp> {
       TextEditingController();
   TextEditingController signupPhoneNoController = TextEditingController();
   TextEditingController signupNricNoController = TextEditingController();
+  TextEditingController bankAccountNumberController = TextEditingController();
+  TextEditingController bankNameController = TextEditingController();
 
   @override
   void dispose() {
@@ -64,202 +66,43 @@ class _SignUpState extends State<SignUp> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodeEmail,
-                              controller: signupEmailController,
-                              keyboardType: TextInputType.emailAddress,
-                              textCapitalization: TextCapitalization.words,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                icon: Icon(
-                                  FontAwesomeIcons.envelope,
-                                  color: Colors.black,
-                                ),
-                                hintText: EMAIL,
-                                hintStyle: TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
-                              ),
-                              onSubmitted: (_) {
-                                focusNodeEmail.requestFocus();
-                              },
-                            ),
-                          ),
+                          emailWidget(),
                           Container(
                             width: 250.0,
                             height: 1.0,
                             color: Colors.grey[400],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodePassword,
-                              controller: signupPasswordController,
-                              obscureText: _obscureTextPassword,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  icon: Icon(
-                                    FontAwesomeIcons.lock,
-                                    color: Colors.black,
-                                  ),
-                                  hintText: PASSWORD,
-                                  hintStyle: TextStyle(
-                                      fontFamily: 'WorkSansSemiBold',
-                                      fontSize: 16.0),
-                                  suffixIcon: GestureDetector(
-                                    onTap: _toggleSignup,
-                                    child: Icon(
-                                      _obscureTextPassword
-                                          ? FontAwesomeIcons.eye
-                                          : FontAwesomeIcons.eyeSlash,
-                                      size: 15.0,
-                                      color: Colors.black,
-                                    ),
-                                  )),
-                              onSubmitted: (_) {
-                                focusNodePassword.requestFocus();
-                              },
-                            ),
-                          ),
+                          passwordWidget(),
                           Container(
                             width: 250.0,
                             height: 1.0,
                             color: Colors.grey[400],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodeConfirmPassword,
-                              controller: signupConfirmPasswordController,
-                              obscureText: _obscureTextConfirmPassword,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                icon: const Icon(
-                                  FontAwesomeIcons.lock,
-                                  color: Colors.black,
-                                ),
-                                hintText: CONFIRM_PASSWORD,
-                                hintStyle: const TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
-                                suffixIcon: GestureDetector(
-                                  onTap: _toggleSignupConfirm,
-                                  child: Icon(
-                                    _obscureTextConfirmPassword
-                                        ? FontAwesomeIcons.eye
-                                        : FontAwesomeIcons.eyeSlash,
-                                    size: 15.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              onSubmitted: (_) {
-                                focusNodeConfirmPassword.requestFocus();
-                              },
-                            ),
-                          ),
+                          confirmPasswordWidget(),
                           Container(
                             width: 250.0,
                             height: 1.0,
                             color: Colors.grey[400],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodeNricNo,
-                              controller: signupNricNoController,
-                              keyboardType: TextInputType.text,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                icon: Icon(
-                                  FontAwesomeIcons.user,
-                                  color: Colors.black,
-                                ),
-                                hintText: NRIC_NO,
-                                hintStyle: TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
-                              ),
-                              onSubmitted: (_) {
-                                focusNodePassword.requestFocus();
-                              },
-                            ),
-                          ),
+                          nricNoWidget(),
                           Container(
                             width: 250.0,
                             height: 1.0,
                             color: Colors.grey[400],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodePhoneNo,
-                              controller: signupPhoneNoController,
-                              keyboardType: TextInputType.number,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                icon: const Icon(
-                                  FontAwesomeIcons.phone,
-                                  color: Colors.black,
-                                ),
-                                hintText: PHONE_NO,
-                                hintStyle: const TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
-                              ),
-                              onSubmitted: (_) {
-                                focusNodePhoneNo.requestFocus();
-                              },
-                              textInputAction: TextInputAction.go,
-                            ),
+                          phoneNumberWidget(),
+                          Container(
+                            width: 250.0,
+                            height: 1.0,
+                            color: Colors.grey[400],
                           ),
+                          bankAccountNumberWidget(),
+                          Container(
+                            width: 250.0,
+                            height: 1.0,
+                            color: Colors.grey[400],
+                          ),
+                          bankNameWidget(),
                         ],
                       ),
                     )),
@@ -314,25 +157,252 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  Widget emailWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        focusNode: focusNodeEmail,
+        controller: signupEmailController,
+        keyboardType: TextInputType.emailAddress,
+        textCapitalization: TextCapitalization.words,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          icon: Icon(
+            FontAwesomeIcons.envelope,
+            color: Colors.black,
+          ),
+          hintText: EMAIL,
+          hintStyle: TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+        ),
+      ),
+    );
+  }
+
+  Widget passwordWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        focusNode: focusNodePassword,
+        controller: signupPasswordController,
+        obscureText: _obscureTextPassword,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: InputDecoration(
+            border: InputBorder.none,
+            icon: Icon(
+              FontAwesomeIcons.lock,
+              color: Colors.black,
+            ),
+            hintText: PASSWORD,
+            hintStyle:
+                TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+            suffixIcon: GestureDetector(
+              onTap: _toggleSignup,
+              child: Icon(
+                _obscureTextPassword
+                    ? FontAwesomeIcons.eye
+                    : FontAwesomeIcons.eyeSlash,
+                size: 15.0,
+                color: Colors.black,
+              ),
+            )),
+        onSubmitted: (_) {
+          focusNodePassword.requestFocus();
+        },
+      ),
+    );
+  }
+
+  Widget confirmPasswordWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        focusNode: focusNodeConfirmPassword,
+        controller: signupConfirmPasswordController,
+        obscureText: _obscureTextConfirmPassword,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: const Icon(
+            FontAwesomeIcons.lock,
+            color: Colors.black,
+          ),
+          hintText: CONFIRM_PASSWORD,
+          hintStyle:
+              const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+          suffixIcon: GestureDetector(
+            onTap: _toggleSignupConfirm,
+            child: Icon(
+              _obscureTextConfirmPassword
+                  ? FontAwesomeIcons.eye
+                  : FontAwesomeIcons.eyeSlash,
+              size: 15.0,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        onSubmitted: (_) {
+          focusNodeConfirmPassword.requestFocus();
+        },
+      ),
+    );
+  }
+
+  Widget nricNoWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        focusNode: focusNodeNricNo,
+        controller: signupNricNoController,
+        keyboardType: TextInputType.text,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          icon: Icon(
+            FontAwesomeIcons.user,
+            color: Colors.black,
+          ),
+          hintText: NRIC_NO,
+          hintStyle: TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+        ),
+        onSubmitted: (_) {
+          focusNodePassword.requestFocus();
+        },
+      ),
+    );
+  }
+
+  Widget phoneNumberWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        focusNode: focusNodePhoneNo,
+        controller: signupPhoneNoController,
+        keyboardType: TextInputType.number,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: const Icon(
+            FontAwesomeIcons.phone,
+            color: Colors.black,
+          ),
+          hintText: PHONE_NO,
+          hintStyle:
+              const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+        ),
+        onSubmitted: (_) {
+          focusNodePhoneNo.requestFocus();
+        },
+        textInputAction: TextInputAction.go,
+      ),
+    );
+  }
+
+  Widget bankAccountNumberWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        controller: bankAccountNumberController,
+        keyboardType: TextInputType.number,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: const Icon(
+            FontAwesomeIcons.piggyBank,
+            color: Colors.black,
+          ),
+          hintText: "Bank Account Number",
+          hintStyle:
+              const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+        ),
+      ),
+    );
+  }
+
+  Widget bankNameWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        controller: bankNameController,
+        keyboardType: TextInputType.text,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: const Icon(
+            FontAwesomeIcons.buildingColumns,
+            color: Colors.black,
+          ),
+          hintText: "Bank Name",
+          hintStyle:
+              const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+        ),
+      ),
+    );
+  }
+
   void _toggleSignUpButton(BuildContext context) async {
     String email = signupEmailController.text.trim();
     String password = signupPasswordController.text.trim();
     String confirmPassword = signupConfirmPasswordController.text.trim();
     String mobileNo = signupPhoneNoController.text.trim();
     String identityNo = signupNricNoController.text.trim();
+    String bankAccountNumber = bankAccountNumberController.text.trim();
+    String bankName = bankNameController.text.trim();
 
-    CommonResponseModel? commonResponseModel =
-        await create(identityNo, mobileNo, email, password);
+    if (password != confirmPassword) {
+      showErrorDialog(context, "Failed", "Password not matched!");
+      return;
+    }
+
+    CommonResponseModel? commonResponseModel = await create(
+        identityNo, mobileNo, email, password, bankAccountNumber, bankName);
 
     if (commonResponseModel != null) {
-      CustomSnackBar(context, const Text('Sign Up Successfully'));
       signupEmailController.clear();
       signupPasswordController.clear();
       signupConfirmPasswordController.clear();
       signupPhoneNoController.clear();
       signupNricNoController.clear();
+      bankAccountNumberController.clear();
+      bankNameController.clear();
+      showSuccessDialog(context, "Success", "Sign Up Successfully!");
     } else {
-      CustomSnackBar(context, const Text('Sign Up Failure'));
+      showErrorDialog(context, "Failed", "Sign up failed! Please try again.");
     }
   }
 
@@ -346,5 +416,121 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       _obscureTextConfirmPassword = !_obscureTextConfirmPassword;
     });
+  }
+
+  void showErrorDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Colors.redAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void showSuccessDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.greenAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => {
+                  Navigator.pop(context),
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
