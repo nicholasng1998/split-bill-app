@@ -63,26 +63,23 @@ class GroupsScreenState extends State<GroupsScreen> {
                                   Navigator.pushNamed(
                                     context,
                                     '/groupDetailsScreen',
-                                    arguments:
-                                        group, // Passing the group object as an argument
+                                    arguments: group,
                                   );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color:
-                                        Colors.white, // Button background color
-                                    borderRadius: BorderRadius.circular(
-                                        8.0), // Rounded corners
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8.0),
                                     border: Border.all(
-                                      color: Colors.blue, // Border color
-                                      width: 2.0, // Border width
+                                      color: Colors.blue,
+                                      width: 2.0,
                                     ),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.grey.withOpacity(0.3),
                                         spreadRadius: 1,
                                         blurRadius: 5,
-                                        offset: Offset(0, 3), // Shadow position
+                                        offset: Offset(0, 3),
                                       ),
                                     ],
                                   ),
