@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/widgets/add-friends.dart';
 import 'package:flutter_application/model/user_model.dart';
 import 'package:flutter_application/services/user_service.dart';
 
@@ -59,7 +58,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     Container(
                       margin: EdgeInsets.only(top: 20.0),
                       width: 400.0,
-                      height: 420.0,
+                      height: 350.0,
                       child: Card(
                         elevation: 2.0,
                         color: Colors.white,

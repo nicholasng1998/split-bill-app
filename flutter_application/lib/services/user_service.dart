@@ -17,7 +17,8 @@ Future<CommonResponseModel?> create(
     String username,
     String password,
     String bankAccountNumber,
-    String bankName) async {
+    String bankName,
+    String name,) async {
   final String url = USER_CREATE;
 
   final Map<String, dynamic> requestData = {
@@ -26,7 +27,8 @@ Future<CommonResponseModel?> create(
     'identityNo': identityNo,
     'mobileNo': mobileNo,
     'bankAccountNumber': bankAccountNumber,
-    'bankName': bankName
+    'bankName': bankName,
+    'name': name
   };
 
   try {

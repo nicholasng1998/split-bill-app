@@ -6,6 +6,7 @@ class UserModel {
   final String password;
   final String bankAccountNumber;
   final String bankName;
+  final String name;
 
   // Constructor
   UserModel({
@@ -16,19 +17,20 @@ class UserModel {
     required this.password,
     required this.bankAccountNumber,
     required this.bankName,
+    required this.name,
   });
 
   // Convert a JSON map to a UserModel object (fromJson)
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      userId: json['userId'],
-      identityNo: json['identityNo'],
-      mobileNo: json['mobileNo'],
-      username: json['username'],
-      password: json['password'],
-      bankAccountNumber: json['bankAccountNumber'],
-      bankName: json['bankName'],
-    );
+        userId: json['userId'],
+        identityNo: json['identityNo'],
+        mobileNo: json['mobileNo'],
+        username: json['username'],
+        password: json['password'],
+        bankAccountNumber: json['bankAccountNumber'],
+        bankName: json['bankName'],
+        name: json['name']);
   }
 
   // Convert a UserModel object to a JSON map (toJson)
@@ -41,6 +43,7 @@ class UserModel {
       'password': password,
       'bankAccountNumber': bankAccountNumber,
       'bankName': bankName,
+      'name': name,
     };
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_application/model/common_response_model.dart';
 import 'package:flutter_application/services/user_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_application/theme.dart';
-import 'package:flutter_application/widgets/snackbar.dart';
 
 const String EMAIL = "Email";
 const String PASSWORD = "Password";
@@ -34,6 +33,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController signupNricNoController = TextEditingController();
   TextEditingController bankAccountNumberController = TextEditingController();
   TextEditingController bankNameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
   @override
   void dispose() {
@@ -66,6 +66,12 @@ class _SignUpState extends State<SignUp> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
+                          nameWidget(),
+                          Container(
+                            width: 250.0,
+                            height: 1.0,
+                            color: Colors.grey[400],
+                          ),
                           emailWidget(),
                           Container(
                             width: 250.0,
@@ -349,6 +355,32 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  Widget nameWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+      child: TextField(
+        controller: nameController,
+        keyboardType: TextInputType.text,
+        autocorrect: false,
+        style: const TextStyle(
+            fontFamily: 'WorkSansSemiBold',
+            fontSize: 16.0,
+            color: Colors.black),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: const Icon(
+            FontAwesomeIcons.user,
+            color: Colors.black,
+          ),
+          hintText: "Name",
+          hintStyle:
+              const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0),
+        ),
+      ),
+    );
+  }
+
   Widget bankNameWidget() {
     return Padding(
       padding: const EdgeInsets.only(
@@ -383,14 +415,15 @@ class _SignUpState extends State<SignUp> {
     String identityNo = signupNricNoController.text.trim();
     String bankAccountNumber = bankAccountNumberController.text.trim();
     String bankName = bankNameController.text.trim();
+    String name = nameController.text.trim();
 
     if (password != confirmPassword) {
       showErrorDialog(context, "Failed", "Password not matched!");
       return;
     }
 
-    CommonResponseModel? commonResponseModel = await create(
-        identityNo, mobileNo, email, password, bankAccountNumber, bankName);
+    CommonResponseModel? commonResponseModel = await create(identityNo,
+        mobileNo, email, password, bankAccountNumber, bankName, name);
 
     if (commonResponseModel != null) {
       signupEmailController.clear();
@@ -400,6 +433,7 @@ class _SignUpState extends State<SignUp> {
       signupNricNoController.clear();
       bankAccountNumberController.clear();
       bankNameController.clear();
+      nameController.clear();
       showSuccessDialog(context, "Success", "Sign Up Successfully!");
     } else {
       showErrorDialog(context, "Failed", "Sign up failed! Please try again.");

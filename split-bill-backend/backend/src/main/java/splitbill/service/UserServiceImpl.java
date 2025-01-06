@@ -11,6 +11,8 @@ import splitbill.dao.BankAccountDetailsRepository;
 import splitbill.dao.UserRepository;
 import splitbill.model.UserModel;
 
+import java.util.Date;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,8 @@ public class UserServiceImpl implements UserService {
     public void createUser(UserModel userModel) {
         UserBean userBean = new UserBean();
         BeanUtils.copyProperties(userModel, userBean);
+        userBean.setCreatedDate(new Date());
+        userBean.setUpdatedDate(new Date());
         log.info("userBean: {}", userBean);
         userRepository.save(userBean);
 

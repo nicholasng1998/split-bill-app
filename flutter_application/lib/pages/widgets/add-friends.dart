@@ -182,12 +182,128 @@ class AddFriendsScreen extends StatelessWidget {
     CommonResponseModel? commonResponseModel = await addFriend(context, email);
 
     if (commonResponseModel != null) {
-      CustomSnackBar(context, const Text('Add Friend Successfully'));
       signupEmailController.clear();
       signupPhoneNoController.clear();
-      Navigator.popAndPushNamed(context, '/friendsScreen');
+      showSuccessDialog(context, "Success", "Add friend successfully!");
     } else {
-      CustomSnackBar(context, const Text('Add Friend Failure'));
+      showErrorDialog(context, "Failed", "Fail to add friend!");
     }
+  }
+
+  void showErrorDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Colors.redAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void showSuccessDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.greenAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => {
+                  Navigator.pop(context),
+                  Navigator.popAndPushNamed(context, '/dashboard'),
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

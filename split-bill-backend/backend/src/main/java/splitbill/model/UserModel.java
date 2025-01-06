@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class UserModel {
     private int userId;
+    private String name;
     private String identityNo;
     private String mobileNo;
     private String username;

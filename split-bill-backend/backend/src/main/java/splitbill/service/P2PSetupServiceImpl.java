@@ -23,6 +23,7 @@ public class P2PSetupServiceImpl implements P2PSetupService{
 
     private final P2PSetupRepository p2PSetupRepository;
     private final UserRepository userRepository;
+    private final ActivityService activityService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -45,6 +46,10 @@ public class P2PSetupServiceImpl implements P2PSetupService{
         p2PSetupRepository.save(p2PSetupBean);
 
         log.info("p2PSetupBean: {}", p2PSetupBean);
+
+        String activityType = "Apply P2P";
+        String action = String.format("You have applied as a P2P merchant with lend amount RM%.2f!", p2PSetupBean.getLendAmount());
+        activityService.saveActivity(activityType, action);
     }
 
     @Override

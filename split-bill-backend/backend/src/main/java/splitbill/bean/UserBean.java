@@ -15,6 +15,9 @@ public class UserBean extends Auditable{
     @Column(name = "USER_ID")
     private int userId;
 
+    @Column(name = "NAME")
+    private String name;
+
     @Column(name = "IDENTITY_NO")
     private String identityNo;
 

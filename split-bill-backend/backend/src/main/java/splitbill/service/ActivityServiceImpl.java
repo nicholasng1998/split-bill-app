@@ -16,6 +16,7 @@ import splitbill.model.ActivityModel;
 import splitbill.util.AuthUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -41,6 +42,8 @@ public class ActivityServiceImpl implements ActivityService {
         activityBean.setUserId(userBean.getUserId());
         activityBean.setActivityType(activityType);
         activityBean.setAction(action);
+        activityBean.setCreatedDate(new Date());
+        activityBean.setUpdatedDate(new Date());
         activityRepository.save(activityBean);
         log.info("activityBean: {}", activityBean);
     }

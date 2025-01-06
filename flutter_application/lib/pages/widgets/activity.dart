@@ -21,8 +21,10 @@ class ActivityState extends State<ActivityScreen> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    activityModels = await readActivities(context) ?? [];
-    setState(() {});
+    var activityModels = await readActivities(context) ?? [];
+    setState(() {
+      this.activityModels = activityModels;
+    });
   }
 
   @override
