@@ -34,7 +34,8 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
     } else {
       groupDetailsModel = null;
     }
-
+    print("didChangeDependencies here");
+    print(groupDetailsModel?.transactionHistoryModels.toString());
     setState(() {});
   }
 
@@ -83,27 +84,30 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ...groupDetailsModel?.userModels.map((model) {
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ...groupDetailsModel?.userModels.map(
+                            (model) {
                               return Card(
                                 color: Colors.red,
                                 child: Container(
-                                  width: 150,
-                                  height: 100,
+                                  width: 100,
+                                  height: 50,
                                   child: Center(
-                                      child: Text("${model.username}",
+                                      child: Text("${model.name}",
                                           style: const TextStyle(
                                               fontFamily: "WorkSansSemiBold",
                                               fontSize: 16.0,
                                               color: Colors.black))),
                                 ),
                               );
-                            }) ??
-                            [],
-                      ],
-                    )),
+                            },
+                          ) ??
+                          [],
+                    ],
+                  ),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
@@ -121,7 +125,6 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Row(children: <Widget>[
                     addUserButton(group),
-                    addP2PButton(group),
                     addActionButton(group),
                     startOrCloseGroup(context, group),
                   ]),
@@ -143,7 +146,8 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
   }
 
   Widget transactionHistory() {
-    List<TransactionHistoryModel> transactionHistoryList = [];
+    List<TransactionHistoryModel> transactionHistoryList =
+        groupDetailsModel?.transactionHistoryModels ?? [];
     return Flexible(
       child: Container(
         margin: const EdgeInsets.only(top: 20.0),
@@ -185,7 +189,7 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
                             vertical: 12.0, horizontal: 20.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(""),
+                          child: itemListText(model),
                         ),
                       ),
                     );
@@ -196,6 +200,33 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget itemListText(TransactionHistoryModel transactionHistoryModel) {
+    String formattedDate = DateFormat('yyyy-MM-dd h:mma')
+        .format(transactionHistoryModel.transactionDate);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${formattedDate}',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              width: 250,
+              child: Text(
+                '${transactionHistoryModel.userIdName} has paid RM${transactionHistoryModel.transactionAmount.toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                softWrap: true,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -233,14 +264,23 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: ElevatedButton(
           onPressed: () {
-            if (group.status != "waiting") {
+            if (group.status == "started") {
               showErrorDialog(context, "Failed",
-                  "Group status is started or closed. Please do not add more user to this group!");
+                  "Group has started. Please do not add more user to this group!");
               return;
             }
 
+            if (group.status == "closed") {
+              showErrorDialog(context, "Failed",
+                  "Group has closed. Please do not add more user to this group!");
+              return;
+            }
+
+            print("addUserButton here");
+            print(groupDetailsModel?.userModels.toString());
+
             Navigator.pushNamed(context, '/addUserToGroupScreen',
-                arguments: group);
+                arguments: [groupDetailsModel, group]);
           },
           child: Text("Add User"),
         ),

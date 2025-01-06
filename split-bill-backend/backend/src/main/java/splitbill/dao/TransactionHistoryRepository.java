@@ -17,7 +17,7 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
     List<TransactionHistoryBean> findByUserId(String userId);
 
     // Custom query to find transactions by groupId
-    List<TransactionHistoryBean> findByGroupId(String groupId);
+    List<TransactionHistoryBean> findByGroupId(int groupId);
 
     // Custom query to find transactions by transactionType
     List<TransactionHistoryBean> findByTransactionType(String transactionType);

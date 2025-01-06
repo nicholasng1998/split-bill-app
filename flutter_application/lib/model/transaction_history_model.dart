@@ -5,6 +5,7 @@ class TransactionHistoryModel {
   DateTime transactionDate;
   double transactionAmount; // BigDecimal in Java is a double in Dart
   int groupId;
+  String userIdName;
 
   // Constructor
   TransactionHistoryModel({
@@ -14,6 +15,7 @@ class TransactionHistoryModel {
     required this.transactionDate,
     required this.transactionAmount,
     required this.groupId,
+    required this.userIdName,
   });
 
   // Factory method to create an instance from a JSON object
@@ -25,6 +27,7 @@ class TransactionHistoryModel {
       transactionDate: DateTime.parse(json['transactionDate']),
       transactionAmount: json['transactionAmount'].toDouble(),
       groupId: json['groupId'],
+      userIdName: json['userIdName'],
     );
   }
 
@@ -37,12 +40,13 @@ class TransactionHistoryModel {
       'transactionDate': transactionDate.toIso8601String(),
       'transactionAmount': transactionAmount,
       'groupId': groupId,
+      'userIdName': userIdName,
     };
   }
 
   // Optional: Override toString for better readability
   @override
   String toString() {
-    return 'TransactionHistoryModel(transactionId: $transactionId, userId: $userId, transactionType: $transactionType, transactionDate: $transactionDate, transactionAmount: $transactionAmount, groupId: $groupId)';
+    return 'TransactionHistoryModel(transactionId: $transactionId, userId: $userId, transactionType: $transactionType, transactionDate: $transactionDate, transactionAmount: $transactionAmount, groupId: $groupId, userIdName: $userIdName)';
   }
 }

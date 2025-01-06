@@ -144,7 +144,7 @@ class FriendsScreenState extends State<FriendsScreen> {
                   Navigator.pushNamed(
                     context,
                     '/addFriendsScreen',
-                  )
+                  ),
                 },
               ),
             )

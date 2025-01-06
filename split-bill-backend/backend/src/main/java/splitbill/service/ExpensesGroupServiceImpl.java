@@ -2,21 +2,22 @@ package splitbill.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import splitbill.bean.ExpensesDetailsBean;
 import splitbill.bean.ExpensesGroupBean;
+import splitbill.bean.TransactionHistoryBean;
 import splitbill.bean.UserBean;
 import splitbill.dao.ExpensesGroupRepository;
+import splitbill.dao.TransactionHistoryRepository;
 import splitbill.dao.UserRepository;
-import splitbill.model.ExpensesDetailsModel;
-import splitbill.model.ExpensesGroupModel;
-import splitbill.model.GroupDetailsModel;
-import splitbill.model.UserModel;
+import splitbill.model.*;
 import splitbill.util.AuthUtil;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -28,6 +29,7 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
     private final UserRepository userRepository;
     private final UserExpensesGroupService userExpensesGroupService;
     private final ExpensesDetailsService expensesDetailsService;
+    private final TransactionHistoryRepository transactionHistoryRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -110,12 +112,25 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
         List<ExpensesDetailsModel> expensesDetailsModels = expensesDetailsService.readAllItemization(groupId);
         log.info("expensesDetailsModels: {}", expensesDetailsModels);
 
+        List<TransactionHistoryBean> transactionHistoryBeans = transactionHistoryRepository.findByGroupId(groupId);
+
+        List<TransactionHistoryModel> transactionHistoryModels = new ArrayList<>();
+        transactionHistoryBeans.forEach(transactionHistoryBean -> {
+            TransactionHistoryModel transactionHistoryModel = new TransactionHistoryModel();
+            BeanUtils.copyProperties(transactionHistoryBean, transactionHistoryModel);
+            UserBean userBean1 = userRepository.getOne(transactionHistoryBean.getUserId());
+            transactionHistoryModel.setUserIdName(userBean1.getName());
+            transactionHistoryModels.add(transactionHistoryModel);
+        });
+        log.info("transactionHistoryModels: {}", transactionHistoryModels);
+
         boolean isHost = userBean.getUserId() == expensesGroupBean.getHost();
         log.info("isHost: {}", isHost);
 
         GroupDetailsModel groupDetailsModel = new GroupDetailsModel();
         groupDetailsModel.setUserModels(userModels);
         groupDetailsModel.setExpensesDetailsModels(expensesDetailsModels);
+        groupDetailsModel.setTransactionHistoryModels(transactionHistoryModels);
         groupDetailsModel.setHost(isHost);
 
         log.info("groupDetailsModel: {}", groupDetailsModel);

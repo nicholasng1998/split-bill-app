@@ -48,7 +48,12 @@ public class UserExpensesGroupServiceImpl implements UserExpensesGroupService {
 
         ExpensesGroupBean expensesGroupBean = expensesGroupRepository.getOne(groupId);
         log.info("expensesGroupBean: {}", expensesGroupBean);
-        activityService.saveActivity("Add User To Group", String.format("You have added %s to %s.", username, expensesGroupBean.getGroupName()));
+        if (username != userBean.getUsername()) {
+            activityService.saveActivity("Add User To Group", String.format("You have added %s to %s.", username, expensesGroupBean.getGroupName()));
+        } else {
+            activityService.saveActivity("Create Group", String.format("You have created a group named %s.", expensesGroupBean.getGroupName()));
+        }
+
     }
 
     @Override

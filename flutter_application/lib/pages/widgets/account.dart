@@ -27,7 +27,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 23.0),
+        padding: const EdgeInsets.only(top: 10.0),
         child: FutureBuilder<UserModel?>(
           future: userModel,
           builder: (context, snapshot) {
@@ -45,7 +45,7 @@ class _AccountScreenState extends State<AccountScreen> {
               _nricController.text = account.identityNo;
 
               return Padding(
-                  padding: const EdgeInsets.only(top: 23.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: Center(
                       child: Column(children: <Widget>[
                     Text(
@@ -56,7 +56,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           color: Colors.black),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 20.0),
+                      margin: EdgeInsets.only(top: 10.0),
                       width: 400.0,
                       height: 350.0,
                       child: Card(

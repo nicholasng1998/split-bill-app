@@ -43,7 +43,7 @@ class GroupsScreenState extends State<GroupsScreen> {
               child: Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 width: 350.0,
-                height: 450.0,
+                height: 400.0,
                 child: Card(
                   elevation: 2.0,
                   color: Colors.white,

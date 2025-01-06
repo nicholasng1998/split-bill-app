@@ -1,14 +1,18 @@
+import 'package:flutter_application/model/transaction_history_model.dart';
+
 import 'user_model.dart'; // Import the UserModel class
 import 'expenses_details_model.dart'; // Import the ExpensesDetailsModel class
 
 class GroupDetailsModel {
   final List<UserModel> userModels;
   final List<ExpensesDetailsModel> expensesDetailsModels;
+  final List<TransactionHistoryModel> transactionHistoryModels;
   final bool isHost;
 
   GroupDetailsModel({
     required this.userModels,
     required this.expensesDetailsModels,
+    required this.transactionHistoryModels,
     required this.isHost,
   });
 
@@ -16,6 +20,7 @@ class GroupDetailsModel {
   factory GroupDetailsModel.fromJson(Map<String, dynamic> json) {
     var userList = json['userModels'] as List?;
     var expensesList = json['expensesDetailsModels'] as List?;
+    var transactionHistoryList = json['transactionHistoryModels'] as List?;
 
     return GroupDetailsModel(
       userModels: userList != null
@@ -24,6 +29,12 @@ class GroupDetailsModel {
       expensesDetailsModels: expensesList != null
           ? expensesList
               .map((expense) => ExpensesDetailsModel.fromJson(expense))
+              .toList()
+          : [],
+      transactionHistoryModels: transactionHistoryList != null
+          ? transactionHistoryList
+              .map((transaction) =>
+                  TransactionHistoryModel.fromJson(transaction))
               .toList()
           : [],
       isHost: json['host'],
@@ -36,6 +47,9 @@ class GroupDetailsModel {
       'userModels': userModels.map((user) => user.toJson()).toList(),
       'expensesDetailsModels':
           expensesDetailsModels.map((expense) => expense.toJson()).toList(),
+      'transactionHistoryModels': transactionHistoryModels
+          .map((transaction) => transaction.toJson())
+          .toList(),
       'isHost': isHost,
     };
   }

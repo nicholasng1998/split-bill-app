@@ -31,6 +31,16 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+
+    // final TransactionHistoryModel transactionHistoryModel =
+    //     arguments[0] as TransactionHistoryModel;
+    // final ExpensesGroupModel expensesGroupModel =
+    //     arguments[1] as ExpensesGroupModel;
+
+
+
     final ExpensesGroupModel group =
         ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
 
@@ -59,18 +69,19 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
         ),
       ),
       body: Container(
-          padding: const EdgeInsets.only(top: 23.0),
-          child: Center(
-              child: Column(children: <Widget>[
-            Text(
-              "Friends",
-              style: const TextStyle(
-                  fontFamily: "WorkSansSemiBold",
-                  fontSize: 25.0,
-                  color: Colors.black),
-            ),
-            Flexible(
-              child: Container(
+        padding: const EdgeInsets.only(top: 23.0),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Friends",
+                style: const TextStyle(
+                    fontFamily: "WorkSansSemiBold",
+                    fontSize: 25.0,
+                    color: Colors.black),
+              ),
+              Flexible(
+                child: Container(
                   margin: const EdgeInsets.only(top: 20.0),
                   width: 300.0,
                   height: 600.0,
@@ -85,7 +96,7 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                         ...friendsList.map((friend) {
                           return Padding(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 20.0, horizontal: 15.0),
+                                  vertical: 10.0, horizontal: 15.0),
                               child: GestureDetector(
                                 onTap: () {
                                   _addUser(
@@ -93,10 +104,9 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                                 },
                                 child: Container(
                                     decoration: BoxDecoration(
-                                        color: Colors
-                                            .white,
-                                        borderRadius: BorderRadius.circular(
-                                            8.0),
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                         border: Border.all(
                                           color: Colors.blue,
                                           width: 2.0,
@@ -106,8 +116,7 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                                             color: Colors.grey.withOpacity(0.3),
                                             spreadRadius: 1,
                                             blurRadius: 5,
-                                            offset:
-                                                Offset(0, 3),
+                                            offset: Offset(0, 3),
                                           ),
                                         ]),
                                     padding: EdgeInsets.symmetric(
@@ -126,9 +135,13 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                         }).toList()
                       ]),
                     ),
-                  )),
-            ),
-          ]))),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -140,11 +153,130 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
         await addUser(context, username, groupId);
 
     if (commonResponseModel != null) {
-      CustomSnackBar(context, const Text('Add User Successfully'));
-      Navigator.popAndPushNamed(context, '/groupDetailsScreen',
-          arguments: group);
+      showSuccessDialog(
+          context, "Success", "Add friend into the group successfully!", group);
     } else {
-      CustomSnackBar(context, const Text('Add Friend Failure'));
+      showErrorDialog(
+          context, "Failed", "Fail to add this friend to the group");
     }
+  }
+
+  void showErrorDialog(BuildContext context, String title, String text) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Colors.redAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void showSuccessDialog(BuildContext context, String title, String text,
+      ExpensesGroupModel group) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        backgroundColor: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.greenAccent,
+                size: 50.0,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 24.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                onPressed: () => {
+                  Navigator.pop(context),
+                  Navigator.popAndPushNamed(context, '/groupDetailsScreen',
+                      arguments: group),
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -529,6 +529,7 @@ class _GroupActionScreenState extends State<GroupActionScreen>
       transactionDate: DateTime.now(),
       transactionAmount: 0.0,
       groupId: 0,
+      userIdName: '',
     );
 
     double? amountDouble = double.tryParse(paymentAmountController.text.trim());

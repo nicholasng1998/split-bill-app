@@ -13,4 +13,5 @@ public class TransactionHistoryModel {
     private Date transactionDate;
     private BigDecimal transactionAmount;
     private int groupId;
+    private String userIdName;
 }

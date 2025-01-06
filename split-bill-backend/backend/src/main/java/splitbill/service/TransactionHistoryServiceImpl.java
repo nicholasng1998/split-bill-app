@@ -46,6 +46,8 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
         transactionHistoryBean.setTransactionType(transactionHistoryModel.getTransactionType());
         transactionHistoryBean.setUserId(userBean.getUserId());
         transactionHistoryBean.setGroupId(transactionHistoryModel.getGroupId());
+        transactionHistoryBean.setCreatedDate(new Date());
+        transactionHistoryBean.setUpdatedDate(new Date());
         log.info("transactionHistoryBean: {}", transactionHistoryBean);
         transactionHistoryRepository.save(transactionHistoryBean);
 
