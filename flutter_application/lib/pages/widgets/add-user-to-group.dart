@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/model/group_details_model.dart';
 import 'package:flutter_application/services/friends_service.dart';
 import 'package:flutter_application/services/user_expenses_group_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,15 +35,16 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
     List<dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as List<dynamic>;
 
-    // final TransactionHistoryModel transactionHistoryModel =
-    //     arguments[0] as TransactionHistoryModel;
-    // final ExpensesGroupModel expensesGroupModel =
-    //     arguments[1] as ExpensesGroupModel;
+    final GroupDetailsModel groupDetailsModel =
+        arguments[0] as GroupDetailsModel;
+    final ExpensesGroupModel group = arguments[1] as ExpensesGroupModel;
 
+    List<String> existingUsers =
+        groupDetailsModel.userModels.map((e) => e.username).toList();
 
-
-    final ExpensesGroupModel group =
-        ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
+    friendsList = friendsList
+        .where((element) => !existingUsers.contains(element.name))
+        .toList();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -94,44 +96,46 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                     child: SingleChildScrollView(
                       child: Column(children: <Widget>[
                         ...friendsList.map((friend) {
+                          if (!existingUsers.contains(friend.name)) {}
+
                           return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 15.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  _addUser(
-                                      context, friend.username, group.groupId);
-                                },
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        border: Border.all(
-                                          color: Colors.blue,
-                                          width: 2.0,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.3),
-                                            spreadRadius: 1,
-                                            blurRadius: 5,
-                                            offset: Offset(0, 3),
-                                          ),
-                                        ]),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 20.0),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "${friend.username}",
-                                        style: const TextStyle(
-                                            fontFamily: "WorkSansSemiBold",
-                                            fontSize: 16.0,
-                                            color: Colors.black),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 15.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                _addUser(context, friend.username,
+                                    group.groupId, group);
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(
+                                        color: Colors.blue,
+                                        width: 2.0,
                                       ),
-                                    )),
-                              ));
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          spreadRadius: 1,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 3),
+                                        ),
+                                      ]),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 20.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "${friend.username}",
+                                      style: const TextStyle(
+                                          fontFamily: "WorkSansSemiBold",
+                                          fontSize: 16.0,
+                                          color: Colors.black),
+                                    ),
+                                  )),
+                            ),
+                          );
                         }).toList()
                       ]),
                     ),
@@ -145,10 +149,8 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
     );
   }
 
-  void _addUser(BuildContext context, String username, int groupId) async {
-    final ExpensesGroupModel group =
-        ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
-
+  void _addUser(BuildContext context, String username, int groupId,
+      ExpensesGroupModel group) async {
     CommonResponseModel? commonResponseModel =
         await addUser(context, username, groupId);
 

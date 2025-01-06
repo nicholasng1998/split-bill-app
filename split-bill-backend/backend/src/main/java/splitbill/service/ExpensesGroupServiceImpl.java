@@ -18,6 +18,7 @@ import splitbill.util.AuthUtil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -57,6 +58,8 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
         expensesGroupBean.setStatus(ExpensesGroupBean.STATUS.WAITING.toValue());
         expensesGroupBean.setHost(userId);
         expensesGroupBean.setDueDate(expensesGroupModel.getDueDate());
+        expensesGroupBean.setCreatedDate(new Date());
+        expensesGroupBean.setUpdatedDate(new Date());
         return expensesGroupBean;
     }
 

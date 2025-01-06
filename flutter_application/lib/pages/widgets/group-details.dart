@@ -112,7 +112,7 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: Text(
-                  "Total Outstanding Amount: RM${group.outstandingAmount}",
+                  "Total Outstanding Amount: RM${group.outstandingAmount.toStringAsFixed(2)}",
                   style: const TextStyle(
                       fontFamily: "WorkSansSemiBold",
                       fontSize: 16.0,
@@ -326,6 +326,12 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: ElevatedButton(
           onPressed: () {
+            if (group.outstandingAmount > 0) {
+              showErrorDialog(context, "Failed",
+                  "Please clear the outstanding amount before closing the group!");
+              return;
+            }
+
             updateToClosed(context, group.groupId);
             showSuccessDialog(
                 context, "Success", "Updated group status to CLOSED");

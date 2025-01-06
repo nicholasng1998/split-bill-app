@@ -15,6 +15,7 @@ import splitbill.dao.UserRepository;
 import splitbill.model.TransactionHistoryModel;
 import splitbill.util.AuthUtil;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,9 +56,14 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService{
         log.info("expensesGroupBean: {}", expensesGroupBean);
 
         if (expensesGroupBean != null) {
-            expensesGroupBean.setPaidAmount(expensesGroupBean.getPaidAmount().add(transactionHistoryModel.getTransactionAmount()));
-            expensesGroupBean.setOutstandingAmount(expensesGroupBean.getOutstandingAmount().min(transactionHistoryBean.getTransactionAmount()));
+            BigDecimal newPaidAmount = expensesGroupBean.getPaidAmount().add(transactionHistoryModel.getTransactionAmount());
+            expensesGroupBean.setPaidAmount(newPaidAmount);
+
+            BigDecimal newOutstandingAmount = expensesGroupBean.getOutstandingAmount().subtract(transactionHistoryBean.getTransactionAmount());
+            expensesGroupBean.setOutstandingAmount(newOutstandingAmount);
+            expensesGroupBean.setUpdatedDate(new Date());
             expensesGroupRepository.save(expensesGroupBean);
+            log.info("expensesGroupBean: {}", expensesGroupBean);
         }
 
         activityService.saveActivity("Make Payment", String.format("You have paid RM%.2f to %s.", transactionHistoryModel.getTransactionAmount(), expensesGroupBean.getGroupName()));
