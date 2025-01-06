@@ -47,7 +47,7 @@ class FriendsScreenState extends State<FriendsScreen> {
               child: Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 width: 350.0,
-                height: 450.0,
+                height: 400.0,
                 child: Card(
                   elevation: 2.0,
                   color: Colors.white,
@@ -84,7 +84,7 @@ class FriendsScreenState extends State<FriendsScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "${friend.username}",
+                                  "${friend.name}",
                                   style: const TextStyle(
                                       fontFamily: "WorkSansSemiBold",
                                       fontSize: 16.0,

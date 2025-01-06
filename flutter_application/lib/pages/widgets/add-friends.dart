@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../model/common_response_model.dart';
 import '../../theme.dart';
-import '../../widgets/snackbar.dart';
 
 const String EMAIL = "Email";
 const String PHONE_NO = "Phone Number";
@@ -179,6 +178,17 @@ class AddFriendsScreen extends StatelessWidget {
   void _addFriend(BuildContext context) async {
     String email = signupEmailController.text.trim();
     String mobileNo = signupPhoneNoController.text.trim();
+
+    if (email.isEmpty) {
+      showErrorDialog(context, "Failed", "Please input email!");
+      return;
+    }
+
+    if (mobileNo.isEmpty) {
+      showErrorDialog(context, "Failed", "Please input mobile number!");
+      return;
+    }
+
     CommonResponseModel? commonResponseModel = await addFriend(context, email);
 
     if (commonResponseModel != null) {
