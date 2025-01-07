@@ -159,6 +159,9 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
         ExpensesGroupModel expensesGroupModel = userExpensesGroupService.readGroup(groupId);
 
         for (UserModel userModel : userModels) {
+            if (userModel.getUserId() == userBean.getUserId()) {
+                continue;
+            }
             String activity = "Payment Reminder";
             String action = String.format("Payment reminder from group: %s. Settlement date is: %s", expensesGroupModel.getGroupName(), expensesGroupModel.getDueDate());
             activityService.saveActivityForUser(activity, action, userModel.getUserId());

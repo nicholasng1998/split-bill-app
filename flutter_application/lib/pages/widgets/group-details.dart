@@ -126,6 +126,7 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
                     if (group != null) addUserButton(group),
                     if (group != null) addActionButton(group),
                     if (group != null) startOrCloseGroup(context, group),
+                    if (group != null) sendReminderButton(context, group),
                   ]),
                 ),
               ),
@@ -305,6 +306,22 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
       style: const TextStyle(
           fontFamily: "WorkSansSemiBold", fontSize: 20.0, color: Colors.black),
     );
+  }
+
+  Widget sendReminderButton(BuildContext context, ExpensesGroupModel group) {
+    if (groupDetailsModel?.isHost ?? false) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            sendReminder(context, group.groupId);
+            showSuccessDialog(context, "Success", "Done send reminder!");
+          },
+          child: Text("Remind"),
+        ),
+      );
+    }
+    return Text("");
   }
 
   Widget startOrCloseGroup(BuildContext context, ExpensesGroupModel group) {

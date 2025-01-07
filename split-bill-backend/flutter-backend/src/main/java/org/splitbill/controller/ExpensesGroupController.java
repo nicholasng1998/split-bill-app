@@ -39,7 +39,7 @@ public class ExpensesGroupController {
         return new ResponseEntity<>(expensesGroupFeignService.getGroupDetails(groupId), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/remind-user")
+    @PostMapping(value = "/send-reminder")
     public ResponseEntity<CommonResponseModel> remindUser(@RequestParam int groupId) {
         return new ResponseEntity<>(expensesGroupFeignService.remindUser(groupId), HttpStatus.OK);
     }
