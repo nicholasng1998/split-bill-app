@@ -6,7 +6,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import splitbill.bean.ExpensesDetailsBean;
 import splitbill.bean.ExpensesGroupBean;
 import splitbill.bean.TransactionHistoryBean;
 import splitbill.bean.UserBean;
@@ -31,6 +30,8 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
     private final UserExpensesGroupService userExpensesGroupService;
     private final ExpensesDetailsService expensesDetailsService;
     private final TransactionHistoryRepository transactionHistoryRepository;
+
+    private final ActivityService activityService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -130,13 +131,39 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
         boolean isHost = userBean.getUserId() == expensesGroupBean.getHost();
         log.info("isHost: {}", isHost);
 
+        ExpensesGroupModel expensesGroupModel = userExpensesGroupService.readGroup(groupId);
+        log.info("expensesGroupModel: {}", expensesGroupModel);
+
         GroupDetailsModel groupDetailsModel = new GroupDetailsModel();
         groupDetailsModel.setUserModels(userModels);
         groupDetailsModel.setExpensesDetailsModels(expensesDetailsModels);
         groupDetailsModel.setTransactionHistoryModels(transactionHistoryModels);
+        groupDetailsModel.setExpensesGroupModel(expensesGroupModel);
         groupDetailsModel.setHost(isHost);
 
         log.info("groupDetailsModel: {}", groupDetailsModel);
         return groupDetailsModel;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void remindUser(int groupId) {
+        String username = AuthUtil.getUsername();
+
+        UserBean userBean = userRepository.findByUsername(username).orElse(null);
+        if (userBean == null) {
+            throw new InternalError("user.not.found");
+        }
+
+        List<UserModel> userModels = userExpensesGroupService.readAllUsersFromGroup(groupId);
+        ExpensesGroupModel expensesGroupModel = userExpensesGroupService.readGroup(groupId);
+
+        for (UserModel userModel : userModels) {
+            String activity = "Payment Reminder";
+            String action = String.format("Payment reminder from group: %s. Settlement date is: %s", expensesGroupModel.getGroupName(), expensesGroupModel.getDueDate());
+            activityService.saveActivityForUser(activity, action, userModel.getUserId());
+        }
+
+        log.info("done reminder.");
     }
 }

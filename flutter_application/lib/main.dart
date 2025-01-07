@@ -15,8 +15,10 @@ import 'package:flutter_application/pages/widgets/friends.dart';
 import 'package:flutter_application/pages/widgets/group-action.dart';
 import 'package:flutter_application/pages/widgets/group-details.dart';
 import 'package:flutter_application/pages/widgets/groups.dart';
+import 'package:flutter_application/pages/widgets/p2p-list.dart';
 import 'package:flutter_application/pages/widgets/payment_methods.dart';
 import 'package:flutter_application/pages/widgets/e-wallet.dart';
+import 'package:flutter_application/pages/widgets/tnc.dart';
 import 'package:flutter_application/provider/auth_token_provider.dart';
 import 'package:flutter_application/utils/my_navigator_observer.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +64,9 @@ class MyApp extends StatelessWidget {
             OnlineBankingConfirmationScreen(),
         '/becomeMerchantScreen': (context) => BecomeMerchantScreen(),
         '/merchantApplicationScreen': (context) => MerchantApplicationScreen(),
-        '/addP2PToGroupScreen': (context) => AddP2PToGroupScreen()
+        '/addP2PToGroupScreen': (context) => AddP2PToGroupScreen(),
+        '/p2PListScreen': (context) => P2PListScreen(),
+        '/tncScreen': (context) => TncScreen(),
       },
       debugShowCheckedModeBanner: false,
       title: 'Split Bill Application',

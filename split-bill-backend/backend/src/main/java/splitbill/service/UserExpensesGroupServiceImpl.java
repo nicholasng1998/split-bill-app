@@ -12,6 +12,7 @@ import splitbill.bean.UserExpensesGroupBean;
 import splitbill.dao.ExpensesGroupRepository;
 import splitbill.dao.UserExpensesGroupRepository;
 import splitbill.dao.UserRepository;
+import splitbill.model.ExpensesDetailsModel;
 import splitbill.model.ExpensesGroupModel;
 import splitbill.model.UserModel;
 
@@ -119,5 +120,16 @@ public class UserExpensesGroupServiceImpl implements UserExpensesGroupService {
 
         log.info("userModels: {}", userModels);
         return userModels;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ExpensesGroupModel readGroup(int groupId) {
+
+        ExpensesGroupBean expensesGroupBean = expensesGroupRepository.getOne(groupId);
+        log.info("expensesGroupBean: {}", expensesGroupBean);
+        ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
+        BeanUtils.copyProperties(expensesGroupBean, expensesGroupModel);
+        return expensesGroupModel;
     }
 }

@@ -49,6 +49,19 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveActivityForUser(String activityType, String action, int userId) {
+        ActivityBean activityBean = new ActivityBean();
+        activityBean.setUserId(userId);
+        activityBean.setActivityType(activityType);
+        activityBean.setAction(action);
+        activityBean.setCreatedDate(new Date());
+        activityBean.setUpdatedDate(new Date());
+        activityRepository.save(activityBean);
+        log.info("activityBean: {}", activityBean);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<ActivityModel> readActivities() {
         String username = AuthUtil.getUsername();

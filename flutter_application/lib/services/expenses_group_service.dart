@@ -175,3 +175,43 @@ Future<GroupDetailsModel?> getGroupDetails(
   }
   return null;
 }
+
+/**
+ * Send Reminder Function
+ */
+Future<CommonResponseModel?> sendReminder(
+    BuildContext context, int groupId) async {
+  final String url = EXPENSES_GROUP_SEND_REMINDER;
+
+  final String? authToken =
+      Provider.of<AuthTokenProvider>(context, listen: false).authToken;
+
+  var params = {
+    'groupId': groupId.toString(),
+  };
+
+  try {
+    final response = await http.post(Uri.parse(url),
+        headers: {
+          'auth-token': authToken ?? '',
+        },
+        body: params);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.body);
+      CommonResponseModel responseModel =
+          CommonResponseModel.fromJson(responseData);
+
+      print('Response: $responseModel');
+      return responseModel;
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    print('Error: $e');
+  } finally {
+    print('Finally');
+  }
+  return null;
+}

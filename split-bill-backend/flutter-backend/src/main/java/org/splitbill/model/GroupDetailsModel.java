@@ -10,6 +10,7 @@ public class GroupDetailsModel {
     List<UserModel> userModels;
     List<ExpensesDetailsModel> expensesDetailsModels;
     List<TransactionHistoryModel> transactionHistoryModels;
+    ExpensesGroupModel expensesGroupModel;
     boolean isHost;
 
 }

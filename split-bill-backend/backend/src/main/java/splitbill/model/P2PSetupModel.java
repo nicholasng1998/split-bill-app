@@ -17,4 +17,6 @@ public class P2PSetupModel {
     private Date createdDate;
 
     private Date updatedDate;
+
+    private String userIdName;
 }

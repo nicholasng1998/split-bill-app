@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface P2PSetupRepository extends JpaRepository<P2PSetupBean, Integer> {
 
     // Find by userId
-    List<P2PSetupBean> findByUserId(int userId);
+    P2PSetupBean findByUserId(int userId);
 
     // Find by status
     List<P2PSetupBean> findByStatus(String status);

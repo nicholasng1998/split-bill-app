@@ -27,22 +27,24 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
     final ExpensesGroupModel group =
         ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
     super.didChangeDependencies();
-    var result = await getGroupDetails(context, group.groupId) ?? [];
-
-    if (result is GroupDetailsModel) {
-      groupDetailsModel = result;
-    } else {
-      groupDetailsModel = null;
-    }
+    GroupDetailsModel? result = await getGroupDetails(context, group.groupId);
     print("didChangeDependencies here");
     print(groupDetailsModel?.transactionHistoryModels.toString());
-    setState(() {});
+    print(result?.expensesGroupModel.toString());
+
+    print(groupDetailsModel?.expensesDetailsModels);
+
+    setState(() {
+      groupDetailsModel = result;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final ExpensesGroupModel group =
-        ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
+    ExpensesGroupModel? group = groupDetailsModel?.expensesGroupModel;
+
+    // final ExpensesGroupModel group =
+    // ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -60,7 +62,7 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
           ),
           child: AppBar(
             title: Text(
-              "${group.groupName.toUpperCase()}",
+              "${group?.groupName.toUpperCase()}",
               style: TextStyle(color: Colors.white),
             ),
             leading: IconButton(
@@ -79,8 +81,8 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
         child: Center(
           child: Column(
             children: <Widget>[
-              settlementDateHeader(group),
-              groupStatusText(group),
+              if (group != null) settlementDateHeader(group),
+              if (group != null) groupStatusText(group),
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: SingleChildScrollView(
@@ -112,7 +114,7 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
               Container(
                 margin: const EdgeInsets.only(top: 20.0),
                 child: Text(
-                  "Total Outstanding Amount: RM${group.outstandingAmount.toStringAsFixed(2)}",
+                  "Total Outstanding Amount: RM${group?.outstandingAmount.toStringAsFixed(2)}",
                   style: const TextStyle(
                       fontFamily: "WorkSansSemiBold",
                       fontSize: 16.0,
@@ -124,18 +126,21 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(children: <Widget>[
-                    addUserButton(group),
-                    addActionButton(group),
-                    startOrCloseGroup(context, group),
+                    if (group != null) addUserButton(group),
+                    if (group != null) addActionButton(group),
+                    if (group != null) startOrCloseGroup(context, group),
                   ]),
                 ),
               ),
-              Text(
-                "Transaction History",
-                style: const TextStyle(
-                    fontFamily: "WorkSansSemiBold",
-                    fontSize: 16.0,
-                    color: Colors.black),
+              Container(
+                margin: const EdgeInsets.only(top: 20.0),
+                child: Text(
+                  "Transaction History",
+                  style: const TextStyle(
+                      fontFamily: "WorkSansSemiBold",
+                      fontSize: 16.0,
+                      color: Colors.black),
+                ),
               ),
               transactionHistory(),
             ],

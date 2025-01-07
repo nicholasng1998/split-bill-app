@@ -21,6 +21,8 @@ const String EXPENSES_GROUP_UPDATE_TO_CLOSED =
     EXPENSES_GROUP_REQUEST_BASE + '/update-to-closed';
 const String EXPENSES_GROUP_GET_GROUP_DETAILS =
     EXPENSES_GROUP_REQUEST_BASE + '/get-group-details';
+const String EXPENSES_GROUP_SEND_REMINDER =
+    EXPENSES_GROUP_REQUEST_BASE + '/send-reminder';
 
 // user-expenses-group
 const String USER_EXPENSES_GROUP_REQUEST_BASE =
@@ -52,3 +54,7 @@ const String ACTIVITY_READ = ACTIVITY_REQUEST_BASE + '/read';
 const String P2P_SETUP_REQUEST_BASE = baseUrl + '/p2p-setup';
 const String P2P_SETUP_APPLY = P2P_SETUP_REQUEST_BASE + '/apply';
 const String P2P_SETUP_FIND_ALL = P2P_SETUP_REQUEST_BASE + '/find-all';
+
+// p2p-transaction
+const String P2P_TRANSACTION_REQUEST_BASE = baseUrl + '/p2p-transaction';
+const String P2P_TRANSACTION_CREATE = P2P_TRANSACTION_REQUEST_BASE + '/create';

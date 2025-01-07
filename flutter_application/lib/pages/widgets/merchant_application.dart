@@ -51,117 +51,51 @@ class MerchantApplicationScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: Container(
-                        width: 300.0,
-                        height: 150.0,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: <Widget>[
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //       top: 20.0,
-                              //       bottom: 20.0,
-                              //       left: 25.0,
-                              //       right: 25.0),
-                              //   child: TextField(
-                              //     controller: groupNameController,
-                              //     keyboardType: TextInputType.text,
-                              //     textCapitalization: TextCapitalization.words,
-                              //     autocorrect: false,
-                              //     style: const TextStyle(
-                              //         fontFamily: 'WorkSansSemiBold',
-                              //         fontSize: 16.0,
-                              //         color: Colors.black),
-                              //     decoration: const InputDecoration(
-                              //       border: InputBorder.none,
-                              //       icon: Icon(
-                              //         FontAwesomeIcons.snowflake,
-                              //         color: Colors.black,
-                              //       ),
-                              //       hintText: "Group Name",
-                              //       hintStyle: TextStyle(
-                              //           fontFamily: 'WorkSansSemiBold',
-                              //           fontSize: 16.0),
-                              //     ),
-                              //     onSubmitted: (_) {},
-                              //   ),
-                              // ),
-                              // Container(
-                              //   width: 250.0,
-                              //   height: 1.0,
-                              //   color: Colors.grey[400],
-                              // ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 20.0,
-                                    bottom: 20.0,
-                                    left: 25.0,
-                                    right: 25.0),
-                                child: TextField(
-                                  controller: amountController,
-                                  keyboardType: TextInputType.number,
-                                  autocorrect: false,
-                                  style: const TextStyle(
-                                      fontFamily: 'WorkSansSemiBold',
-                                      fontSize: 16.0,
-                                      color: Colors.black),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    icon: const Icon(
-                                      FontAwesomeIcons.dollarSign,
-                                      color: Colors.black,
-                                    ),
-                                    hintText: "Lend Amount",
-                                    hintStyle: const TextStyle(
-                                        fontFamily: 'WorkSansSemiBold',
-                                        fontSize: 16.0),
+                      width: 300.0,
+                      height: 150.0,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20.0,
+                                  bottom: 20.0,
+                                  left: 25.0,
+                                  right: 25.0),
+                              child: TextField(
+                                controller: amountController,
+                                keyboardType: TextInputType.number,
+                                autocorrect: false,
+                                style: const TextStyle(
+                                    fontFamily: 'WorkSansSemiBold',
+                                    fontSize: 16.0,
+                                    color: Colors.black),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  icon: const Icon(
+                                    FontAwesomeIcons.dollarSign,
+                                    color: Colors.black,
                                   ),
-                                  onSubmitted: (_) {
-                                    ;
-                                  },
-                                  textInputAction: TextInputAction.go,
+                                  hintText: "Lend Amount",
+                                  hintStyle: const TextStyle(
+                                      fontFamily: 'WorkSansSemiBold',
+                                      fontSize: 16.0),
                                 ),
+                                onSubmitted: (_) {
+                                  ;
+                                },
+                                textInputAction: TextInputAction.go,
                               ),
-                              Container(
-                                width: 250.0,
-                                height: 1.0,
-                                color: Colors.grey[400],
-                              ),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(
-                              //       top: 20.0,
-                              //       bottom: 20.0,
-                              //       left: 25.0,
-                              //       right: 25.0),
-                              //   child: GestureDetector(
-                              //     onTap: () => _selectDueDate(context),
-                              //     child: AbsorbPointer(
-                              //       child: TextField(
-                              //         controller: dueDateController,
-                              //         autocorrect: false,
-                              //         style: const TextStyle(
-                              //             fontFamily: 'WorkSansSemiBold',
-                              //             fontSize: 16.0,
-                              //             color: Colors.black),
-                              //         decoration: InputDecoration(
-                              //           border: InputBorder.none,
-                              //           icon: const Icon(
-                              //             FontAwesomeIcons.calendar,
-                              //             color: Colors.black,
-                              //           ),
-                              //           hintText: "Due Date",
-                              //           hintStyle: const TextStyle(
-                              //               fontFamily: 'WorkSansSemiBold',
-                              //               fontSize: 16.0),
-                              //         ),
-                              //         onSubmitted: (_) {},
-                              //         textInputAction: TextInputAction.go,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        )),
+                            ),
+                            Container(
+                              width: 250.0,
+                              height: 1.0,
+                              color: Colors.grey[400],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 125.0),

@@ -15,4 +15,6 @@ public interface ExpensesGroupService {
 
     GroupDetailsModel readGroupDetails(int groupId);
 
+    void remindUser(int groupId);
+
 }

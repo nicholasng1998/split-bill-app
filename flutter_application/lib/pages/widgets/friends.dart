@@ -100,8 +100,28 @@ class FriendsScreenState extends State<FriendsScreen> {
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/p2PListScreen',
+                  );
+                },
+                child: Center(
+                  child: Text(
+                    "Add P2P",
+                    style: TextStyle(
+                        fontFamily: "WorkSansSemiBold",
+                        fontSize: 16.0,
+                        color: Colors.blue),
+                  ),
+                ),
+              ),
+            ),
             Container(
-              margin: const EdgeInsets.only(top: 40.0),
+              margin: const EdgeInsets.only(top: 10.0),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
                 boxShadow: <BoxShadow>[

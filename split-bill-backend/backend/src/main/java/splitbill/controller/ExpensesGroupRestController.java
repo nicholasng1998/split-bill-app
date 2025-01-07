@@ -63,4 +63,15 @@ public class ExpensesGroupRestController {
         return new ResponseEntity<>(groupDetailsModel, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/send-reminder")
+    public ResponseEntity<CommonResponseModel> sendReminder(@RequestParam int groupId) {
+        try {
+            expensesGroupService.remindUser(groupId);
+        } catch (Exception e) {
+            log.error("error: ", e);
+            return new ResponseEntity<>(new CommonResponseModel("Fail"), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(new CommonResponseModel("Success"), HttpStatus.OK);
+    }
+
 }

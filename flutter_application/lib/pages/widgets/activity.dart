@@ -139,7 +139,7 @@ class ActivityState extends State<ActivityScreen> {
           children: [
             Text(
               '${formattedDate}',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             Container(
               width: 250,

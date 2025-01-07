@@ -61,8 +61,11 @@ public class P2PSetupServiceImpl implements P2PSetupService{
         p2PSetupBeans.forEach(p2PSetupBean -> {
             P2PSetupModel p2PSetupModel = new P2PSetupModel();
             BeanUtils.copyProperties(p2PSetupBean, p2PSetupModel);
+            UserBean userBean = userRepository.getOne(p2PSetupModel.getUserId());
+            p2PSetupModel.setUserIdName(userBean.getName());
             p2PSetupModels.add(p2PSetupModel);
         });
+
         log.info("p2pSetupModels: {}", p2PSetupModels);
 
         return p2PSetupModels;

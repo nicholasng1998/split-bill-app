@@ -1,18 +1,21 @@
 import 'package:flutter_application/model/transaction_history_model.dart';
+import 'package:flutter_application/model/expenses_group_model.dart';
 
-import 'user_model.dart'; // Import the UserModel class
-import 'expenses_details_model.dart'; // Import the ExpensesDetailsModel class
+import 'user_model.dart';
+import 'expenses_details_model.dart';
 
 class GroupDetailsModel {
   final List<UserModel> userModels;
   final List<ExpensesDetailsModel> expensesDetailsModels;
   final List<TransactionHistoryModel> transactionHistoryModels;
+  final ExpensesGroupModel expensesGroupModel;
   final bool isHost;
 
   GroupDetailsModel({
     required this.userModels,
     required this.expensesDetailsModels,
     required this.transactionHistoryModels,
+    required this.expensesGroupModel,
     required this.isHost,
   });
 
@@ -37,6 +40,8 @@ class GroupDetailsModel {
                   TransactionHistoryModel.fromJson(transaction))
               .toList()
           : [],
+      expensesGroupModel:
+          ExpensesGroupModel.fromJson(json['expensesGroupModel']),
       isHost: json['host'],
     );
   }
@@ -50,6 +55,7 @@ class GroupDetailsModel {
       'transactionHistoryModels': transactionHistoryModels
           .map((transaction) => transaction.toJson())
           .toList(),
+      'expensesGroupModel': expensesDetailsModels,
       'isHost': isHost,
     };
   }

@@ -23,4 +23,7 @@ public interface ExpensesGroupFeignService {
 
     @GetMapping(value = "/get-group-details")
     GroupDetailsModel getGroupDetails(@RequestParam int groupId);
+
+    @PostMapping(value = "/remind-user")
+    CommonResponseModel remindUser(@RequestParam int groupId);
 }

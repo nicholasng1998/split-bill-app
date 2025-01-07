@@ -11,6 +11,7 @@ import splitbill.bean.UserBean;
 import splitbill.bean.embedded.FriendsId;
 import splitbill.dao.FriendsRepository;
 import splitbill.dao.UserRepository;
+import splitbill.model.CommonResponseModel;
 import splitbill.model.UserModel;
 import splitbill.util.AuthUtil;
 
@@ -93,5 +94,23 @@ public class FriendsServiceImpl implements FriendsService {
 
         log.info("userModels: {}", userModels);
         return userModels;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public CommonResponseModel removeFriend(int userId) {
+        String username = AuthUtil.getUsername();
+
+        UserBean userBean = userRepository.findByUsername(username).orElse(null);
+        if (userBean == null) {
+            throw new InternalError("user.not.found");
+        }
+
+        CommonResponseModel commonResponseModel = new CommonResponseModel();
+
+        FriendsBean friendsBean = friendsRepository.findByUserIdAndFriendUserId(userBean.getUserId(), userId);
+        friendsRepository.delete(friendsBean);
+        log.info("done remove.");
+        return commonResponseModel;
     }
 }

@@ -13,4 +13,6 @@ public interface UserExpensesGroupService {
 
     List<UserModel> readAllUsersFromGroup(int groupId);
 
+    ExpensesGroupModel readGroup(int groupId);
+
 }

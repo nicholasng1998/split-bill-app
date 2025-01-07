@@ -13,4 +13,8 @@ public interface FriendsRepository extends JpaRepository<FriendsBean, Integer> {
 
     @Query("SELECT f FROM FriendsBean f WHERE f.id.userId IN :userIds")
     List<FriendsBean> findAllByUserId(@Param("userIds") List<Integer> userIds);
+
+    @Query(value = "SELECT * from friends where user_id = :userId and friend_user_id = :friendUserId", nativeQuery = true)
+    FriendsBean findByUserIdAndFriendUserId(@Param("userId") int userId, @Param("friendUserId") int friendUserId);
+
 }
