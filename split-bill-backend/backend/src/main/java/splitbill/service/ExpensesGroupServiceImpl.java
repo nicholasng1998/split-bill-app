@@ -117,11 +117,11 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
         List<ExpensesDetailsModel> expensesDetailsModels = expensesDetailsService.readAllItemization(groupId);
         log.info("expensesDetailsModels: {}", expensesDetailsModels);
 
-        if (!CollectionUtils.isEmpty(expensesDetailsModels)) {
-            userModels.forEach(userModel -> {
-                userModel.setTotalOweAmount(BigDecimal.ZERO);
-            });
+        userModels.forEach(userModel -> {
+            userModel.setTotalOweAmount(BigDecimal.ZERO);
+        });
 
+        if (!CollectionUtils.isEmpty(expensesDetailsModels)) {
             for (ExpensesDetailsModel expensesDetailsModel: expensesDetailsModels) {
                 UserModel userModel = userModels.stream().filter(userModel1 -> userModel1.getUserId() == expensesDetailsModel.getCreatedBy()).findAny().orElse(null);
                 if (userModel != null) {
