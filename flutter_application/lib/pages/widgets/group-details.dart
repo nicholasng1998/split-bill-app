@@ -161,7 +161,7 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
             Container(
               width: 200,
               child: Text(
-                'Expenses: RM${model?.totalOweAmount?.toStringAsFixed(2)}',
+                'Expenses: RM${model.totalOweAmount?.toStringAsExponential(2) ?? 0.toStringAsFixed(2)}',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
                 softWrap: true,
               ),
