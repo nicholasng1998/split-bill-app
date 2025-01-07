@@ -43,9 +43,6 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
   Widget build(BuildContext context) {
     ExpensesGroupModel? group = groupDetailsModel?.expensesGroupModel;
 
-    // final ExpensesGroupModel group =
-    // ModalRoute.of(context)!.settings.arguments as ExpensesGroupModel;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),

@@ -40,7 +40,7 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
     final ExpensesGroupModel group = arguments[1] as ExpensesGroupModel;
 
     List<String> existingUsers =
-        groupDetailsModel.userModels.map((e) => e.username).toList();
+        groupDetailsModel.userModels.map((e) => e.name).toList();
 
     friendsList = friendsList
         .where((element) => !existingUsers.contains(element.name))
@@ -127,7 +127,7 @@ class AddUserToGroupScreenState extends State<AddUserToGroupScreen> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "${friend.username}",
+                                      "${friend.name}",
                                       style: const TextStyle(
                                           fontFamily: "WorkSansSemiBold",
                                           fontSize: 16.0,

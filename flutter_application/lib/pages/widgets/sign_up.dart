@@ -422,6 +422,19 @@ class _SignUpState extends State<SignUp> {
       return;
     }
 
+    if (email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty ||
+        mobileNo.isEmpty ||
+        identityNo.isEmpty ||
+        identityNo.isEmpty ||
+        bankAccountNumber.isEmpty ||
+        bankName.isEmpty ||
+        name.isEmpty) {
+      showErrorDialog(context, "Failed", "Please fill in all the fields!");
+      return;
+    }
+
     CommonResponseModel? commonResponseModel = await create(identityNo,
         mobileNo, email, password, bankAccountNumber, bankName, name);
 

@@ -26,7 +26,7 @@ public class P2PTransactionServiceImpl implements P2PTransactionService{
     private final P2PSetupRepository p2PSetupRepository;
     private static final BigDecimal P2P_INTEREST_PERCENT = new BigDecimal("1.05");
     private static final int SETTLEMENT_PERIOD = 90;
-    private static final String GROUP_NAME_FORMAT = "Settlement With P2P Merchant: %s";
+    private static final String GROUP_NAME_FORMAT = "P2P Merchant (%s)";
 
     private final ExpensesGroupRepository expensesGroupRepository;
 
@@ -65,7 +65,7 @@ public class P2PTransactionServiceImpl implements P2PTransactionService{
 
 
         UserBean merchantBean = userRepository.getOne(p2PTransactionModel.getMerchantId());
-        BigDecimal totalExpenses = newRemainingAmount.multiply(P2P_INTEREST_PERCENT);
+        BigDecimal totalExpenses = p2PTransactionModel.getLendAmount().multiply(P2P_INTEREST_PERCENT);
         ExpensesGroupModel expensesGroupModel = new ExpensesGroupModel();
         expensesGroupModel.setTotalExpenses(totalExpenses);
         expensesGroupModel.setGroupName(String.format(GROUP_NAME_FORMAT, merchantBean.getName()));

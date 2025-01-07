@@ -67,7 +67,7 @@ public class ExpensesDetailsServiceImpl implements ExpensesDetailsService {
 
             UserBean eachUser = userRepository.findById(bean.getCreatedBy()).orElse(null);
             if (eachUser != null) {
-                expensesDetailsModel.setCreatedByName(eachUser.getUsername());
+                expensesDetailsModel.setCreatedByName(eachUser.getName());
             }
             expensesDetailsModels.add(expensesDetailsModel);
         });
