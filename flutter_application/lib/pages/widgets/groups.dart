@@ -155,27 +155,54 @@ class GroupsScreenState extends State<GroupsScreen> {
   }
 
   Widget itemListText(ExpensesGroupModel expensesGroupModel) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Group Name: ${expensesGroupModel.groupName.toUpperCase()}',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-            Container(
-              width: 250,
-              child: Text(
-                'Total Expenses: RM${expensesGroupModel.totalExpenses.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-                softWrap: true,
+    print("hello");
+    print(expensesGroupModel.toJson());
+    if (expensesGroupModel.status == "closed") {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Group Name: ${expensesGroupModel.groupName.toUpperCase()}',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
-            ),
-          ],
-        ),
-      ],
-    );
+              Container(
+                width: 250,
+                child: Text(
+                  'Settled Up!',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                  softWrap: true,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    } else {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Group Name: ${expensesGroupModel.groupName.toUpperCase()}',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                width: 250,
+                child: Text(
+                  'Total Expenses: RM${expensesGroupModel.totalExpenses.toStringAsFixed(2)}',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                  softWrap: true,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
   }
 }
