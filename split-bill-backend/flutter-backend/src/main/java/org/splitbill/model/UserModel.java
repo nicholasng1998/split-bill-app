@@ -2,6 +2,8 @@ package org.splitbill.model;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class UserModel {
     private int userId;
@@ -12,5 +14,6 @@ public class UserModel {
     private String password;
     private String bankAccountNumber;
     private String bankName;
+    private BigDecimal totalOweAmount;
 
 }

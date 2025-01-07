@@ -7,6 +7,8 @@ class UserModel {
   final String bankAccountNumber;
   final String bankName;
   final String name;
+  double totalOweAmount;
+  double totalRemainingAmount;
 
   // Constructor
   UserModel({
@@ -18,19 +20,24 @@ class UserModel {
     required this.bankAccountNumber,
     required this.bankName,
     required this.name,
+    required this.totalOweAmount,
+    required this.totalRemainingAmount,
   });
 
   // Convert a JSON map to a UserModel object (fromJson)
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-        userId: json['userId'],
-        identityNo: json['identityNo'],
-        mobileNo: json['mobileNo'],
-        username: json['username'],
-        password: json['password'],
-        bankAccountNumber: json['bankAccountNumber'],
-        bankName: json['bankName'],
-        name: json['name']);
+      userId: json['userId'],
+      identityNo: json['identityNo'],
+      mobileNo: json['mobileNo'],
+      username: json['username'],
+      password: json['password'],
+      bankAccountNumber: json['bankAccountNumber'],
+      bankName: json['bankName'],
+      name: json['name'],
+      totalOweAmount: json['totalOweAmount']?.toDouble(),
+      totalRemainingAmount: json['totalRemainingAmount']?.toDouble(),
+    );
   }
 
   // Convert a UserModel object to a JSON map (toJson)
@@ -44,6 +51,8 @@ class UserModel {
       'bankAccountNumber': bankAccountNumber,
       'bankName': bankName,
       'name': name,
+      'totalOweAmount': totalOweAmount,
+      'totalRemainingAmount': totalRemainingAmount,
     };
   }
 }

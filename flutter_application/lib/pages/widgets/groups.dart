@@ -155,8 +155,6 @@ class GroupsScreenState extends State<GroupsScreen> {
   }
 
   Widget itemListText(ExpensesGroupModel expensesGroupModel) {
-    print("hello");
-    print(expensesGroupModel.toJson());
     if (expensesGroupModel.status == "closed") {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,

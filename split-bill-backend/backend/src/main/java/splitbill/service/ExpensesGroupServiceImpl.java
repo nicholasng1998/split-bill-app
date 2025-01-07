@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -115,6 +116,19 @@ public class ExpensesGroupServiceImpl implements ExpensesGroupService {
 
         List<ExpensesDetailsModel> expensesDetailsModels = expensesDetailsService.readAllItemization(groupId);
         log.info("expensesDetailsModels: {}", expensesDetailsModels);
+
+        if (!CollectionUtils.isEmpty(expensesDetailsModels)) {
+            userModels.forEach(userModel -> {
+                userModel.setTotalOweAmount(BigDecimal.ZERO);
+            });
+
+            for (ExpensesDetailsModel expensesDetailsModel: expensesDetailsModels) {
+                UserModel userModel = userModels.stream().filter(userModel1 -> userModel1.getUserId() == expensesDetailsModel.getCreatedBy()).findAny().orElse(null);
+                if (userModel != null) {
+                    userModel.setTotalOweAmount(userModel.getTotalOweAmount().add(expensesDetailsModel.getAmount()));
+                }
+            }
+        }
 
         List<TransactionHistoryBean> transactionHistoryBeans = transactionHistoryRepository.findByGroupId(groupId);
 

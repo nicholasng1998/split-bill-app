@@ -26,7 +26,7 @@ public class P2PTransactionServiceImpl implements P2PTransactionService{
     private final P2PSetupRepository p2PSetupRepository;
     private static final BigDecimal P2P_INTEREST_PERCENT = new BigDecimal("1.05");
     private static final int SETTLEMENT_PERIOD = 90;
-    private static final String GROUP_NAME_FORMAT = "P2P Merchant (%s)";
+    private static final String GROUP_NAME_FORMAT = "P2P (%s)";
 
     private final ExpensesGroupRepository expensesGroupRepository;
 

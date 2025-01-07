@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/model/expenses_group_model.dart';
 import 'package:flutter_application/model/group_details_model.dart';
 import 'package:flutter_application/model/transaction_history_model.dart';
+import 'package:flutter_application/model/user_model.dart';
 import 'package:flutter_application/services/expenses_group_service.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -91,14 +92,12 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
                               return Card(
                                 color: Colors.red,
                                 child: Container(
-                                  width: 100,
+                                  width: 200,
                                   height: 50,
                                   child: Center(
-                                      child: Text("${model.name}",
-                                          style: const TextStyle(
-                                              fontFamily: "WorkSansSemiBold",
-                                              fontSize: 16.0,
-                                              color: Colors.black))),
+                                    child: userText(
+                                        model, groupDetailsModel?.isHost),
+                                  ),
                                 ),
                               );
                             },
@@ -145,6 +144,31 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget userText(UserModel model, bool? isHost) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'User: ${model.name}',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              width: 200,
+              child: Text(
+                'Expenses: RM${model?.totalOweAmount?.toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+                softWrap: true,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -325,45 +349,48 @@ class GroupDetailsState extends State<GroupDetailsScreen> {
   }
 
   Widget startOrCloseGroup(BuildContext context, ExpensesGroupModel group) {
-    if (group.status == "waiting") {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: ElevatedButton(
-          onPressed: () {
-            updateToStarted(context, group.groupId);
-            showSuccessDialog(
-                context, "Success", "Updated group status to STARTED");
-            setState(() {
-              group.status = "started";
-            });
-          },
-          child: Text("Start Group"),
-        ),
-      );
-    } else if (group.status == "started") {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: ElevatedButton(
-          onPressed: () {
-            if (group.outstandingAmount > 0) {
-              showErrorDialog(context, "Failed",
-                  "Please clear the outstanding amount before closing the group!");
-              return;
-            }
+    if (groupDetailsModel?.isHost ?? false) {
+      if (group.status == "waiting") {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ElevatedButton(
+            onPressed: () {
+              updateToStarted(context, group.groupId);
+              showSuccessDialog(
+                  context, "Success", "Updated group status to STARTED");
+              setState(() {
+                group.status = "started";
+              });
+            },
+            child: Text("Start Group"),
+          ),
+        );
+      } else if (group.status == "started") {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ElevatedButton(
+            onPressed: () {
+              if (group.outstandingAmount > 0) {
+                showErrorDialog(context, "Failed",
+                    "Please clear the outstanding amount before closing the group!");
+                return;
+              }
 
-            updateToClosed(context, group.groupId);
-            showSuccessDialog(
-                context, "Success", "Updated group status to CLOSED");
-            setState(() {
-              group.status = "closed";
-            });
-          },
-          child: Text("Close Group"),
-        ),
-      );
-    } else if (group.status == "closed") {
-      return Text("");
+              updateToClosed(context, group.groupId);
+              showSuccessDialog(
+                  context, "Success", "Updated group status to CLOSED");
+              setState(() {
+                group.status = "closed";
+              });
+            },
+            child: Text("Close Group"),
+          ),
+        );
+      } else if (group.status == "closed") {
+        return Text("");
+      }
     }
+
     return Text("");
   }
 
